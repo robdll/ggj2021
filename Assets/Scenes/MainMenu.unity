@@ -181,7 +181,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 2b0cdfd00d2669a44b0c7870f89cff8e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -800,6 +800,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809803103 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4720282528142997372, guid: e7bbd23f33771db4596af17d627a3973,
+    type: 3}
+  m_PrefabInstance: {fileID: 2335209031622441356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9607a324895f44f9cd807101a67e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &925322190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +1035,7 @@ GameObject:
   - component: {fileID: 1227817090}
   - component: {fileID: 1227817089}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1309,6 +1321,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 809803103}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SceneChange
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197821410100013867, guid: 57c80e2b33edd0241962a4fcd00754d7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c80e2b33edd0241962a4fcd00754d7, type: 3}
 --- !u!224 &1997969080 stripped
@@ -1317,3 +1364,78 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1997969079}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2335209031622441356
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -4720282528142997372, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: LoadingScreenPanel
+      value: 
+      objectReference: {fileID: 1837328818990654715, guid: f7d9194c3ded65b49af2cc04ec4f3639,
+        type: 3}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 495.8963
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 365.88428
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -158.3447
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375425082476236420, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5946149791073887104, guid: e7bbd23f33771db4596af17d627a3973,
+        type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7bbd23f33771db4596af17d627a3973, type: 3}
