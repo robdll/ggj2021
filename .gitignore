@@ -21,8 +21,6 @@
 
 # Visual Studio cache directory
 .vs/
-.vscode/
-
 # VS Code cache directory
 .vscode/
 
