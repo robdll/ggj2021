@@ -9,7 +9,7 @@ public class ScenesManager : MonoBehaviour
     public static ScenesManager instance;
     private float loadingScreenMinDuration = 2; 
    /* public GameObject LoadingImage;*/ /*Nice image moving during loading screens*/
-    public GameObject LoadingScreenPanel; /*Panel that will be instantiated when a scene change is called*/
+    public GameObject loadingScreenPanel; /*Panel that will be instantiated when a scene change is called*/
     [HideInInspector]
     public Image loadingScreenImage; /*Background image of the loading screen*/
     
@@ -27,11 +27,6 @@ public class ScenesManager : MonoBehaviour
     private void Awake()
     {       
         DontDestroyOnLoad(gameObject); /*This keeps alive the OBJECT on witch it's attached (in our case the GameManager), after a scene change. Singleton Pattern*/
-
-      /*  if(LoadingScreenPanel.transform.childCount > 0)
-        {
-            loadingScreenImage = LoadingScreenPanel.transform.GetChild(0).GetComponent<Image>();
-        }*/
     }
 
 
@@ -68,7 +63,7 @@ public class ScenesManager : MonoBehaviour
     {        
         /*yield return new WaitForSeconds(delay);*/
 
-        Instantiate(LoadingScreenPanel);
+        Instantiate(loadingScreenPanel);
         /*LoadingScreenPanel.SetActive(true);*/
 
         yield return new WaitForSecondsRealtime(0.2f);
@@ -93,5 +88,11 @@ public class ScenesManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public int GetActualScene()
+    {
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        return SceneManager.GetActiveScene().buildIndex;
     }
 }

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4375425082476236420}
   - component: {fileID: -4720282528142997372}
+  - component: {fileID: 6543698070741106879}
+  - component: {fileID: 488520833334028837}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,6 +45,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9607a324895f44f9cd807101a67e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingImage: {fileID: 0}
-  LoadingScreenPanel: {fileID: 0}
+  LoadingScreenPanel: {fileID: 1837328818990654715, guid: f7d9194c3ded65b49af2cc04ec4f3639,
+    type: 3}
   mainCamera: {fileID: 0}
+--- !u!114 &6543698070741106879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946149791073887104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f4e3b451a1fd74b87163b13060fe55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creditsPanel: {fileID: 1837328818990654715, guid: e7c9f53b3cf0f69488d0eff7ac76e534,
+    type: 3}
+--- !u!114 &488520833334028837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946149791073887104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2f8514d361dfd43934370fabe4182f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverPanel: {fileID: 1837328818990654715, guid: eed065825ddb73e44b483ce6179af47e,
+    type: 3}
