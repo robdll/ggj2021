@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
+using UnityEngine;
 
 [RequireComponent(typeof(HealthController))]
 public class PlayerController : MonoBehaviour
@@ -11,11 +10,13 @@ public class PlayerController : MonoBehaviour
     public event OnPlayerDeathDelegate deathEvent;
     private HealthController healthController;
     private void Start() 
-    {
-        
+    {        
         healthController = GetComponent<HealthController>();
-        /*no checks needed because each and every player shoud have a HealthController attached to it*/
-        healthController = healthController == null ?  healthController = gameObject.AddComponent<HealthController>() : healthController = this.healthController;
+        if(!healthController)
+        {
+            healthController = gameObject.AddComponent<HealthController>();
+        }
+      //  healthController = healthController == null ?  healthController = gameObject.AddComponent<HealthController>() : healthController = this.healthController;
     }
 
     void Update() 
