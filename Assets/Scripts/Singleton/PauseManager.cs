@@ -4,6 +4,7 @@ public class PauseManager : MonoBehaviour
 {
     public GameObject pauseMenuPanel;
     private Pause pause;     
+    
     private void Update()
     {  
         if(Input.GetKeyDown(KeyCode.P) && ScenesManager.Instance.GetActualScene() > 0)
