@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     PhotonView PV;
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();
+        //PV = GetComponent<PhotonView>();
     }
 
 
