@@ -33,11 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start() 
     {
-        if (!PV.IsMine)
-        {
-            Destroy(GetComponentInChildren<Camera>().gameObject);
-        }
-
         healthController = GetComponent<HealthController>();
         if(!healthController) 
         {
@@ -45,13 +40,18 @@ public class PlayerController : MonoBehaviour
         }
         playerRigidbody = GetComponent<Rigidbody>();
         //animator = GetComponentInChildren<Animator>();
+        if (!PV.IsMine)
+        {
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+           // Destroy(animator);
+        }
     }
 
     void FixedUpdate() 
     {
         if (!PV.IsMine)
             return;
-
+        IsGroundedCheck();
         Debug.Log("transform.position.y  : " + transform.position.y);
         Debug.Log("grounded  : " + grounded);
         if (animator != null)
@@ -60,12 +60,12 @@ public class PlayerController : MonoBehaviour
             {
                 Death();
             }
-            if (grounded == true)
+            if(grounded == true)
             {
-                if (Input.GetAxisRaw("Jump") > 0)
+                if (Input.GetAxisRaw("Jump") > 0 && grounded == true)
                 {
                     _jumpSpeed = jumpSpeed;
-                    animator.SetBool("grounded", false);
+                    animator.SetBool("grounded", grounded);
                     animator.SetTrigger("Jump");
                     playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
 
@@ -121,23 +121,25 @@ public class PlayerController : MonoBehaviour
         animator.SetInteger("Move", 1);
     }
 
-    private void LateUpdate()
+
+    public void IsGroundedCheck()
     {
-        // transform.eulerAngles = new Vector3(0, transform.rotation.y, 0);
         if (animator != null)
         {
+            // bool isGrounded;
             Ray ray = new Ray(transform.position, -transform.up * rayLength);
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit))
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, rayLength))
             {
-
-                animator.SetBool("grounded", true);
+                //animator.SetBool("grounded", true);
+                grounded = true;
+                
             }
             else
             {
-                animator.SetBool("grounded", false);
+                //animator.SetBool("grounded", false);
+                grounded = false;
             }
         }
-        //Debug.DrawRay(transform.position, -transform.up * rayLength, Color.green);
     }
 }
