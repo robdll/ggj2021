@@ -42,6 +42,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected 2 Master");
         PhotonNetwork.JoinLobby();
+        // this allow to load scene 1 for all player when host start
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
@@ -93,6 +95,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        //TODO remove player from roomlist then call onroomlistupdate
+        Debug.Log("Player Left");
         MenuManager.Instance.OpenMenu("connect");
     }
 
@@ -114,6 +118,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("New Player");
         Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().Setup(newPlayer);
+    }
+
+    public void StartGame()
+    {
+        Debug.Log("Start Game");
+        PhotonNetwork.LoadLevel(1);
     }
 
 
