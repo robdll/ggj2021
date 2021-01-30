@@ -30,7 +30,13 @@ public class PlayerController : MonoBehaviour
 
 
     private void Start() 
-    {        
+    {
+        if (!PV.IsMine)
+        {
+            DestroyObject(GetComponent<Camera>().gameObject);
+            return;
+        }
+
         healthController = GetComponent<HealthController>();
         if(!healthController)
         {
