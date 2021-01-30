@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 70}
+  m_SizeDelta: {x: 600, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1612250487116354320
 CanvasRenderer:
@@ -119,7 +119,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1612250487116354321}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7581013776356301544}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7581013776356301544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7308c5f5e5df3184b96204e0af73eedc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 1612250488396968234}
 --- !u!1 &1612250488396968236
 GameObject:
   m_ObjectHideFlags: 0
