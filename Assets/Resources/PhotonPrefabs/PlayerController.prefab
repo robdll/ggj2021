@@ -68,7 +68,7 @@ MonoBehaviour:
   animator: {fileID: 7759086326807597724}
   rotateSpeed: 14
   movementSpeed: 12
-  jumpSpeed: 2
+  jumpSpeed: 10
 --- !u!54 &7759086327195144270
 Rigidbody:
   m_ObjectHideFlags: 0
