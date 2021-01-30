@@ -1,26 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    private Transform playerTransform;
     private Vector3 cameraOffset;
     private Camera cam;
+    private Quaternion cameraRot;
+    private Transform playerTransform;
+
     private void Start()
     {
         cam = GetComponent<Camera>();
+        cameraRot = cam.transform.rotation;
         playerTransform = GetComponentInParent<PlayerController>().transform;
         if (playerTransform != null)
         {
             cameraOffset = cam.transform.position - playerTransform.position;
         }
-
     }
-    // Update is called once per frame
+
     void Update()
     {
-        //transform.rotation = 
-        //cam.transform.position = playerTransform.position + cameraOffset;
+        cam.transform.rotation = cameraRot;
+        cam.transform.position = playerTransform.position + cameraOffset;
     }
 }

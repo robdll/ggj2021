@@ -7,7 +7,7 @@ public class LeaderboardManager : MonoBehaviour
     private void Start() 
     {
         /*Al lancio del gioco cerco il player e lo registro all'evento tramite +=*/
-        FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
+        //FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
     }
 
     void Update() 
@@ -19,7 +19,7 @@ public class LeaderboardManager : MonoBehaviour
     {
         Debug.Log("Check Evento Morte Player");
         /*Alla morte del player e lo rimuovo dall'evento tramite -=*/
-        FindObjectOfType<PlayerController>().deathEvent -= OnPlayerDeath;
+        //FindObjectOfType<PlayerController>().deathEvent -= OnPlayerDeath;
     }
 
     private void OnGameOver(PlayerController[] allPlayers)

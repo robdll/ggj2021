@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public delegate void OnPlayerDeathDelegate();
     public event OnPlayerDeathDelegate deathEvent;
     private HealthController healthController;
-    private Animator animator;
+    public Animator animator;
     private bool grounded = true;
     private Rigidbody playerRigidbody;
     private Vector3 direction;
@@ -29,51 +29,60 @@ public class PlayerController : MonoBehaviour
             healthController = gameObject.AddComponent<HealthController>();
         }
         playerRigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
     }
 
     void FixedUpdate() 
     {
-        
+
         Debug.Log("transform.position.y  : " + transform.position.y);
         Debug.Log("grounded  : " + grounded);
-        if (transform.position.y <= 1f)
+        if (animator != null)
         {
-            grounded = true;
-            animator.SetBool("grounded", true);
-        }
-        if (this.healthController.lives <= 0)
-        {
-            Death();
-        }
-        if(grounded == true)
-        {  
-            if(Input.GetAxisRaw("Jump") > 0)
+            if (this.healthController.lives <= 0)
             {
-                _jumpSpeed = jumpSpeed;
-                grounded = false;
-                animator.SetBool("grounded", false);
-                playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
-                animator.SetTrigger("Jump");
-            }           
-        }
+                Death();
+            }
+            if (transform.position.y <= 1f)
+            {
+                grounded = true;
+                if (animator != null)
+                {
+                    animator.SetBool("grounded", true);
 
-        if(Input.GetAxisRaw("Attack") > 0 && animator.GetBool("Attacking") == false)
-        {
-            /*creo collider d'attacco*/
-            animator.SetBool("Attacking", true);            
-        }
-        else
-        {
-            animator.SetBool("Attacking", false);
-        }
+                }
+            }
+            if (grounded == true)
+            {
+                if (Input.GetAxisRaw("Jump") > 0)
+                {
+                    _jumpSpeed = jumpSpeed;
+                    grounded = false;
+                    animator.SetBool("grounded", false);
+                    animator.SetTrigger("Jump");
 
-        if (Input.GetAxisRaw("Interact") > 0)
-        {
-            /*usa oggetto*/
-            animator.SetTrigger("Interact");
-        }
-        Movement();        
+                    playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
+
+                }
+            }
+
+            if (Input.GetAxisRaw("Attack") > 0 && animator.GetBool("Attacking") == false)
+            {
+                /*creo collider d'attacco*/
+                animator.SetBool("Attacking", true);
+            }
+            else
+            {
+                animator.SetBool("Attacking", false);
+            }
+
+            if (Input.GetAxisRaw("Interact") > 0)
+            {
+                /*usa oggetto*/
+                animator.SetTrigger("Interact");
+            }
+            Movement();
+        }    
 
     }
     public void Death() 

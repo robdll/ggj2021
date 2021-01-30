@@ -64,6 +64,7 @@ MonoBehaviour:
   score: 0
   frags: 0
   assists: 0
+  animator: {fileID: 7759086326807597724}
   rotateSpeed: 14
   movementSpeed: 12
   jumpSpeed: 2
@@ -115,7 +116,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1431538883070741247}
   - component: {fileID: 5279221274463101907}
-  - component: {fileID: 3379420819604339397}
   - component: {fileID: 7414373954129682927}
   m_Layer: 0
   m_Name: Camera
@@ -181,14 +181,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3379420819604339397
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8621620921536565918}
-  m_Enabled: 1
 --- !u!114 &7414373954129682927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +261,12 @@ PrefabInstance:
 --- !u!4 &7759086326798089592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 6e7a3bc2e7ff97f4690999180f7f6373,
+    type: 3}
+  m_PrefabInstance: {fileID: 7759086326798215164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7759086326807597724 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 6e7a3bc2e7ff97f4690999180f7f6373,
     type: 3}
   m_PrefabInstance: {fileID: 7759086326798215164}
   m_PrefabAsset: {fileID: 0}
