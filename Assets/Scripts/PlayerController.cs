@@ -33,8 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!PV.IsMine)
         {
-            Object.Destroy(GetComponentInChildren<Camera>().gameObject);
-            return;
+            Destroy(GetComponentInChildren<Camera>().gameObject);
         }
 
         healthController = GetComponent<HealthController>();

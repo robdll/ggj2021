@@ -5,12 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Multiplayer/Launcher.unity
-    guid: 932852af0b8ccda4aa613408606cef31
-  - enabled: 0
-    path: Assets/Multiplayer/Game.unity
-    guid: 01c15a7a2ede5fe46a8e43b0ae843432
   - enabled: 0
     path: Assets/Misc/FPS/Scenes/IntroMenu.unity
     guid: 56e3faabc5bb30f49a68bb8f1292f988
@@ -23,10 +17,25 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Misc/FPS/Scenes/MainScene.unity
     guid: d794a2ef8ba31d847ad3c19d03e2ddb9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sandbox_Programmers.unity
     guid: 9c20bb012b883bd4983c5f8ffcd94d3d
   - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 4b6f5c3c1aa74b84491020f38f3268a6
+  - enabled: 0
+    path: Assets/Scenes/MainMenu.unity
+    guid: 4b6f5c3c1aa74b84491020f38f3268a6
+  - enabled: 1
+    path: Assets/Multiplayer/Launcher.unity
+    guid: 932852af0b8ccda4aa613408606cef31
+  - enabled: 0
+    path: Assets/Multiplayer/Game.unity
+    guid: 01c15a7a2ede5fe46a8e43b0ae843432
+  - enabled: 0
+    path: Assets/Multiplayer/Game.unity
+    guid: 01c15a7a2ede5fe46a8e43b0ae843432
+  - enabled: 1
+    path: Assets/Scenes/World 1-1.unity
+    guid: b26ad958194b44865a0686b7b47d599c
   m_configObjects: {}

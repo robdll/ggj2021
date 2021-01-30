@@ -68,7 +68,7 @@ MonoBehaviour:
   animator: {fileID: 7759086326807597724}
   rotateSpeed: 14
   movementSpeed: 12
-  jumpSpeed: 2
+  jumpSpeed: 10
 --- !u!54 &7759086327195144270
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 1431538883070741247}
   - component: {fileID: 5279221274463101907}
   - component: {fileID: 7414373954129682927}
+  - component: {fileID: 1507233103942953394}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -211,6 +212,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac75ec7585eef84f8edc513981c9676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &1507233103942953394
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621620921536565918}
+  m_Enabled: 1
 --- !u!1001 &7759086326798215164
 PrefabInstance:
   m_ObjectHideFlags: 0
