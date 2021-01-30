@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Animations;
 using System.Collections.Generic;
+using Photon.Pun;
 
 [RequireComponent(typeof(HealthController))]
 public class PlayerController : MonoBehaviour
@@ -20,9 +21,22 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
-   
+
+    PhotonView PV;
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
+
     private void Start() 
-    {        
+    {
+        if (!PV.IsMine)
+        {
+            Object.Destroy(GetComponentInChildren<Camera>().gameObject);
+            return;
+        }
+
         healthController = GetComponent<HealthController>();
         if(!healthController)
         {
@@ -34,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() 
     {
+        if (!PV.IsMine)
+            return;
 
         Debug.Log("transform.position.y  : " + transform.position.y);
         Debug.Log("grounded  : " + grounded);
