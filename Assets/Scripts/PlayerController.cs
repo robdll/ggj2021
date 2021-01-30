@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
     private void LateUpdate()
     {
         // transform.eulerAngles = new Vector3(0, transform.rotation.y, 0);
-        //Debug.DrawRay();
+        //Ray ray = new Ray(transform.position, -transform.up);
+        Debug.DrawRay(transform.position, -transform.up, Color.green);
     }
 }
