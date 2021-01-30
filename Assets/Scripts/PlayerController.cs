@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 1;
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
+    [SerializeField]
+    private float rayLength = 1;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
     PhotonView PV;
@@ -36,9 +38,8 @@ public class PlayerController : MonoBehaviour
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(playerRigidbody);
         }
-
         healthController = GetComponent<HealthController>();
-        if(!healthController)
+        if(!healthController) 
         {
             healthController = gameObject.AddComponent<HealthController>();
         }
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!PV.IsMine)
             return;
-
+        IsGroundedCheck();
         Debug.Log("transform.position.y  : " + transform.position.y);
         Debug.Log("grounded  : " + grounded);
         if (animator != null)
@@ -59,24 +60,13 @@ public class PlayerController : MonoBehaviour
             {
                 Death();
             }
-            if (transform.position.y <= 1f)
+            if(grounded == true)
             {
-                grounded = true;
-                if (animator != null)
-                {
-                    animator.SetBool("grounded", true);
-
-                }
-            }
-            if (grounded == true)
-            {
-                if (Input.GetAxisRaw("Jump") > 0)
+                if (Input.GetAxisRaw("Jump") > 0 && grounded == true)
                 {
                     _jumpSpeed = jumpSpeed;
-                    grounded = false;
-                    animator.SetBool("grounded", false);
+                    animator.SetBool("grounded", grounded);
                     animator.SetTrigger("Jump");
-
                     playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
 
                 }
@@ -131,9 +121,25 @@ public class PlayerController : MonoBehaviour
         animator.SetInteger("Move", 1);
     }
 
-    private void LateUpdate()
+
+    public void IsGroundedCheck()
     {
-        // transform.eulerAngles = new Vector3(0, transform.rotation.y, 0);
-        //Debug.DrawRay();
+        if (animator != null)
+        {
+            // bool isGrounded;
+            Ray ray = new Ray(transform.position, -transform.up * rayLength);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, rayLength))
+            {
+                //animator.SetBool("grounded", true);
+                grounded = true;
+                
+            }
+            else
+            {
+                //animator.SetBool("grounded", false);
+                grounded = false;
+            }
+        }
     }
 }

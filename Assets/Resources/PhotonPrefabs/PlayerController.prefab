@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 7759086327195144305}
   - component: {fileID: 7759086327195144269}
   - component: {fileID: 7759086327195144270}
+  - component: {fileID: 6380983203285993634}
   - component: {fileID: -1155886392645921613}
   - component: {fileID: -4732133829036236358}
+  - component: {fileID: 4409815861206929636}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -65,10 +67,11 @@ MonoBehaviour:
   score: 0
   frags: 0
   assists: 0
-  animator: {fileID: 7759086326807597724}
+  animator: {fileID: 6380983203285993634}
   rotateSpeed: 14
   movementSpeed: 12
   jumpSpeed: 10
+  rayLength: 0.2
 --- !u!54 &7759086327195144270
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,6 +88,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
+--- !u!95 &6380983203285993634
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759086327195144304}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 6e7a3bc2e7ff97f4690999180f7f6373, type: 3}
+  m_Controller: {fileID: 9100000, guid: f4300a279f1eecf428e81325bf50d129, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-1155886392645921613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,10 +123,11 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   observableSearch: 2
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -4732133829036236358}
+  - {fileID: 4409815861206929636}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -124,6 +147,45 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!114 &4409815861206929636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759086327195144304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 2
+    Name: Jump
+  - Type: 9
+    SynchronizeType: 2
+    Name: Interact
+  - Type: 3
+    SynchronizeType: 2
+    Name: Move
+  - Type: 1
+    SynchronizeType: 2
+    Name: jumpAnimSpeed
+  - Type: 4
+    SynchronizeType: 2
+    Name: grounded
+  - Type: 4
+    SynchronizeType: 2
+    Name: Attacking
+  - Type: 9
+    SynchronizeType: 2
+    Name: Death
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &8621620921536565918
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,17 +345,12 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f4300a279f1eecf428e81325bf50d129, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 6e7a3bc2e7ff97f4690999180f7f6373, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6e7a3bc2e7ff97f4690999180f7f6373, type: 3}
 --- !u!4 &7759086326798089592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 6e7a3bc2e7ff97f4690999180f7f6373,
-    type: 3}
-  m_PrefabInstance: {fileID: 7759086326798215164}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7759086326807597724 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 6e7a3bc2e7ff97f4690999180f7f6373,
     type: 3}
   m_PrefabInstance: {fileID: 7759086326798215164}
   m_PrefabAsset: {fileID: 0}
