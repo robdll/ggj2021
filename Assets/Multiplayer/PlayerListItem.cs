@@ -14,6 +14,7 @@ public class PlayerListItem : MonoBehaviourPunCallbacks
     {
         player = _player;
         text.text = _player.NickName;
+        Debug.Log("HASHTABLE = " + _player.CustomProperties);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

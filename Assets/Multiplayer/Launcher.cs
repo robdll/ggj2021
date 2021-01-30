@@ -12,6 +12,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     // create room input reference
     [SerializeField] TMP_InputField roomNameInputField;
+
+    // create player input reference
+    [SerializeField] TMP_InputField userNameInputField;
+
     // error text is displayed on the error panel. 
     [SerializeField] TMP_Text errorText;
     [SerializeField] TMP_Text roomNameText;
@@ -19,6 +23,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] Transform playerListContent;
     [SerializeField] GameObject playerListItemPrefab;
+    [SerializeField] GameObject startGameButton;
 
     void Awake()
     {
@@ -42,14 +47,25 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected 2 Master");
         PhotonNetwork.JoinLobby();
+        // this allow to load scene 1 for all player when host start
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
     {
         MenuManager.Instance.OpenMenu("connect");
         Debug.Log("Lobby Joined");
-        PhotonNetwork.NickName = "Player" + Random.Range(0, 1000).ToString("0000");
+
+        PhotonNetwork.NickName = (PhotonNetwork.NickName != "" && PhotonNetwork.NickName != null) ? PhotonNetwork.NickName : ("Player" + Random.Range(0, 1000).ToString("0000"));
     }
+
+    //public override void OnPlayerPropertiesUpdate()
+    //{
+    //    MenuManager.Instance.OpenMenu("connect");
+    //    Debug.Log("Lobby Joined");
+
+    //    PhotonNetwork.NickName = (PhotonNetwork.NickName != "" && PhotonNetwork.NickName != null) ? PhotonNetwork.NickName : ("Player" + Random.Range(0, 1000).ToString("0000"));
+    //}
 
     public void CreateRoom()
     {
@@ -58,7 +74,16 @@ public class Launcher : MonoBehaviourPunCallbacks
             return;
         }
         PhotonNetwork.CreateRoom(roomNameInputField.text);
+        PhotonNetwork.NickName = (PhotonNetwork.NickName != "" && PhotonNetwork.NickName != null) ? PhotonNetwork.NickName : ("Player" + Random.Range(0, 1000).ToString("0000"));
         MenuManager.Instance.OpenMenu("loading"); 
+    }
+
+    public void SaveUsername()
+    {
+        //PhotonNetwork.CreateRoom(roomNameInputField.text);
+        PhotonNetwork.NickName = userNameInputField.text;
+        Debug.Log("PhotonNetwork.NickName " + PhotonNetwork.NickName);
+        MenuManager.Instance.OpenMenu("connect");
     }
 
     public override void OnJoinedRoom()
@@ -66,11 +91,24 @@ public class Launcher : MonoBehaviourPunCallbacks
         MenuManager.Instance.OpenMenu("room");
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
         Player[] players = PhotonNetwork.PlayerList;
+        
+        foreach (Transform child in playerListContent)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < players.Length; i++)
         {
             Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().Setup(players[i]);
         }
+        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+    }
+
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -93,6 +131,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        //TODO remove player from roomlist then call onroomlistupdate
+        Debug.Log("Player Left");
         MenuManager.Instance.OpenMenu("connect");
     }
 
@@ -106,6 +146,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
         for (int i = 0; i < roomList.Count; i++)
         {
+            //photon removed list do not get referencially removed. 
+            // so we check for the RemoveFromList bool and act accordingly skipping them
+            if (roomList[i].RemovedFromList)
+                continue;
             Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().Setup(roomList[i]);
         }
     }
@@ -114,6 +158,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("New Player");
         Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().Setup(newPlayer);
+    }
+
+    public void StartGame()
+    {
+        Debug.Log("Start Game");
+        PhotonNetwork.LoadLevel(1);
     }
 
 
