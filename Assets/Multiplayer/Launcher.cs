@@ -12,6 +12,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     // create room input reference
     [SerializeField] TMP_InputField roomNameInputField;
+
+    // create player input reference
+    [SerializeField] TMP_InputField userNameInputField;
+
     // error text is displayed on the error panel. 
     [SerializeField] TMP_Text errorText;
     [SerializeField] TMP_Text roomNameText;
@@ -51,8 +55,17 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         MenuManager.Instance.OpenMenu("connect");
         Debug.Log("Lobby Joined");
-        PhotonNetwork.NickName = "Player" + Random.Range(0, 1000).ToString("0000");
+
+        PhotonNetwork.NickName = (PhotonNetwork.NickName != "" && PhotonNetwork.NickName != null) ? PhotonNetwork.NickName : ("Player" + Random.Range(0, 1000).ToString("0000"));
     }
+
+    //public override void OnPlayerPropertiesUpdate()
+    //{
+    //    MenuManager.Instance.OpenMenu("connect");
+    //    Debug.Log("Lobby Joined");
+
+    //    PhotonNetwork.NickName = (PhotonNetwork.NickName != "" && PhotonNetwork.NickName != null) ? PhotonNetwork.NickName : ("Player" + Random.Range(0, 1000).ToString("0000"));
+    //}
 
     public void CreateRoom()
     {
@@ -61,7 +74,16 @@ public class Launcher : MonoBehaviourPunCallbacks
             return;
         }
         PhotonNetwork.CreateRoom(roomNameInputField.text);
+        PhotonNetwork.NickName = (PhotonNetwork.NickName != "" && PhotonNetwork.NickName != null) ? PhotonNetwork.NickName : ("Player" + Random.Range(0, 1000).ToString("0000"));
         MenuManager.Instance.OpenMenu("loading"); 
+    }
+
+    public void SaveUsername()
+    {
+        //PhotonNetwork.CreateRoom(roomNameInputField.text);
+        PhotonNetwork.NickName = userNameInputField.text;
+        Debug.Log("PhotonNetwork.NickName " + PhotonNetwork.NickName);
+        MenuManager.Instance.OpenMenu("connect");
     }
 
     public override void OnJoinedRoom()
