@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start() 
     {
-        if (!PV.IsMine)
+        if (PV && !PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() 
     {
-        if (!PV.IsMine)
+        if (PV && !PV.IsMine)
             return;
 
         Debug.Log("transform.position.y  : " + transform.position.y);
