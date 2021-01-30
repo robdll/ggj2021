@@ -1,15 +1,16 @@
-using UnityEngine;
-using UnityEngine.Animations;
 using System.Collections.Generic;
 using Photon.Pun;
+using UnityEngine;
+using UnityEngine.Animations;
+using DG.Tweening;
 
-[RequireComponent(typeof(HealthController))]
-public class PlayerController : MonoBehaviour
-{
+
+[RequireComponent (typeof (HealthController))]
+public class PlayerController : MonoBehaviour {
     public int score = 0;
     public int frags = 0;
     public int assists = 0;
-    public delegate void OnPlayerDeathDelegate();
+    public delegate void OnPlayerDeathDelegate ();
     public event OnPlayerDeathDelegate deathEvent;
     private HealthController healthController;
     public Animator animator;
@@ -17,121 +18,123 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 direction;
     public float rotateSpeed = 1;
+    public float defaultSpeed = 12;
     public float movementSpeed = 1;
+    public float sprintSpeedUpTime = .01f;
+    public float sprintDuration = .3f;
+    public float sprintSpeed = 60;
+    public float sprintChargingSpeed = 3;
+
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
     PhotonView PV;
-    private void Awake()
-    {
+    private void Awake () {
         //PV = GetComponent<PhotonView>();
     }
 
-
-    private void Start() 
-    {
-        if (PV && !PV.IsMine)
-        {
-            Destroy(GetComponentInChildren<Camera>().gameObject);
+    private void Start () {
+        if (PV && !PV.IsMine) {
+            Destroy (GetComponentInChildren<Camera> ().gameObject);
         }
 
-        healthController = GetComponent<HealthController>();
-        if(!healthController)
-        {
-            healthController = gameObject.AddComponent<HealthController>();
+        healthController = GetComponent<HealthController> ();
+        if (!healthController) {
+            healthController = gameObject.AddComponent<HealthController> ();
         }
-        playerRigidbody = GetComponent<Rigidbody>();
+        playerRigidbody = GetComponent<Rigidbody> ();
         //animator = GetComponentInChildren<Animator>();
     }
 
-    void FixedUpdate() 
-    {
+    void FixedUpdate () {
         if (PV && !PV.IsMine)
             return;
 
-        Debug.Log("transform.position.y  : " + transform.position.y);
-        Debug.Log("grounded  : " + grounded);
-        if (animator != null)
-        {
-            if (this.healthController.lives <= 0)
-            {
-                Death();
+        Debug.Log ("transform.position.y  : " + transform.position.y);
+        Debug.Log ("grounded  : " + grounded);
+        if (animator != null) {
+            if (this.healthController.lives <= 0) {
+                Death ();
             }
-            if (transform.position.y <= 1f)
-            {
+            if (transform.position.y <= 1f) {
                 grounded = true;
-                if (animator != null)
-                {
-                    animator.SetBool("grounded", true);
+                if (animator != null) {
+                    animator.SetBool ("grounded", true);
 
                 }
             }
-            if (grounded == true)
-            {
-                if (Input.GetAxisRaw("Jump") > 0)
-                {
+            if (grounded == true) {
+                if (Input.GetAxisRaw ("Jump") > 0) {
                     _jumpSpeed = jumpSpeed;
                     grounded = false;
-                    animator.SetBool("grounded", false);
-                    animator.SetTrigger("Jump");
+                    animator.SetBool ("grounded", false);
+                    animator.SetTrigger ("Jump");
 
-                    playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
+                    playerRigidbody.AddForce (new Vector3 (0, _jumpSpeed, 0), ForceMode.Impulse);
 
                 }
             }
 
-            if (Input.GetAxisRaw("Attack") > 0 && animator.GetBool("Attacking") == false)
-            {
+            if (Input.GetAxisRaw ("Attack") > 0 && animator.GetBool ("Attacking") == false) {
                 /*creo collider d'attacco*/
-                animator.SetBool("Attacking", true);
-            }
-            else
-            {
-                animator.SetBool("Attacking", false);
+                sprint();
+                animator.SetBool ("Attacking", true);
+            } else {
+                animator.SetBool ("Attacking", false);
             }
 
-            if (Input.GetAxisRaw("Interact") > 0)
-            {
+            if (Input.GetAxisRaw ("Interact") > 0) {
                 /*usa oggetto*/
-                animator.SetTrigger("Interact");
+                animator.SetTrigger ("Interact");
             }
-            Movement();
-        }    
+            Movement ();
+        }
 
     }
-    public void Death() 
-    {
-        animator.SetBool("Death", true);
-        if (deathEvent != null)
-        {
-            deathEvent();
+    public void Death () {
+        animator.SetBool ("Death", true);
+        if (deathEvent != null) {
+            deathEvent ();
         }
+    }
+
+    public void Movement () {
+        float horizontalMove = Input.GetAxisRaw ("Horizontal");
+        float verticalMove = Input.GetAxisRaw ("Vertical");
+
+        direction = new Vector3 (horizontalMove, 0.0f, verticalMove);
+
+        if (direction != Vector3.zero) {
+            transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (direction), rotateSpeed * Time.deltaTime);
+        } else {
+            animator.SetInteger ("Move", 0);
+        }
+
+        playerRigidbody.MovePosition (transform.position + movementSpeed * Time.deltaTime * direction);
+        animator.SetInteger ("Move", 1);
+    }
+
+    private void sprint () {
+        Sequence sprintSequence = DOTween.Sequence();
+        sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
+        sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintSpeedUpTime));
+        sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, defaultSpeed, sprintDuration).SetEase(Ease.OutQuad));
+        // mySequence.PrependInterval(sprintDuration);
+
+
+        // DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintDelay);
+        // DG.Tweening.DOTween.To(value => Time.timeScale = value, 1, 0, 0.4f).SetEase(Ease.InCubic));
+        // movementSpeed = sprintSpeed;
+        // Invoke ("stopSprint", sprintDuration);
     }
     
-    public void Movement()
-    {
-        float horizontalMove = Input.GetAxisRaw("Horizontal");
-        float verticalMove = Input.GetAxisRaw("Vertical");        
+    private void stopSprint () {
+        movementSpeed = defaultSpeed;
 
-       
-        direction = new Vector3(horizontalMove, 0.0f, verticalMove);
-
-        if(direction != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotateSpeed * Time.deltaTime);
-        }
-        else
-        {
-            animator.SetInteger("Move", 0);
-        }
-
-        playerRigidbody.MovePosition(transform.position + movementSpeed * Time.deltaTime * direction);
-        animator.SetInteger("Move", 1);
     }
 
-    private void LateUpdate()
-    {
+    private void LateUpdate () {
         // transform.eulerAngles = new Vector3(0, transform.rotation.y, 0);
         //Debug.DrawRay();
     }
