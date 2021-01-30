@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 1;
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
-    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, { "NE", 1 }, { "E", 2 }, { "SE", 3 }, { "S", 4 }, { "SW", 5 }, { "W", 6 }, { "NW", 7 }, };
+    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
+    
     private void Start() 
     {        
         healthController = GetComponent<HealthController>();
@@ -29,20 +30,17 @@ public class PlayerController : MonoBehaviour
         }
         playerRigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-      //  healthController = healthController == null ?  healthController = gameObject.AddComponent<HealthController>() : healthController = this.healthController;
     }
 
     void FixedUpdate() 
     {
         
-        // Debug.Log("Horizontal : " + Input.GetAxisRaw("Horizontal")+ "\nVertical: "+ Input.GetAxisRaw("Vertical"));
         Debug.Log("transform.position.y  : " + transform.position.y);
         Debug.Log("grounded  : " + grounded);
         if (transform.position.y <= 1f)
         {
             grounded = true;
             animator.SetBool("grounded", true);
-            // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(0,0,0)), rotateSpeed*4 * Time.deltaTime);
         }
         if (this.healthController.lives <= 0)
         {
@@ -50,7 +48,6 @@ public class PlayerController : MonoBehaviour
         }
         if(grounded == true)
         {  
-            //transform.Translate(transform.up*3.5f);
             if(Input.GetAxisRaw("Jump") > 0)
             {
                 _jumpSpeed = jumpSpeed;
@@ -59,7 +56,6 @@ public class PlayerController : MonoBehaviour
                 playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
                 animator.SetTrigger("Jump");
             }           
-            //_jumpSpeed = 0;        
         }
 
         if(Input.GetAxisRaw("Attack") > 0 && animator.GetBool("Attacking") == false)
@@ -80,9 +76,10 @@ public class PlayerController : MonoBehaviour
         Movement();        
 
     }
-    private void Death() 
+    public void Death() 
     {
-        if(deathEvent != null)
+        animator.SetBool("Death", true);
+        if (deathEvent != null)
         {
             deathEvent();
         }
