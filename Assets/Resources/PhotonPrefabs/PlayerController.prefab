@@ -69,6 +69,7 @@ MonoBehaviour:
   rotateSpeed: 14
   movementSpeed: 12
   jumpSpeed: 10
+  rayLength: 0.2
 --- !u!54 &7759086327195144270
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 1;
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
+    [SerializeField]
+    private float rayLength = 1;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
     PhotonView PV;
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
         }
 
         healthController = GetComponent<HealthController>();
-        if(!healthController)
+        if(!healthController) 
         {
             healthController = gameObject.AddComponent<HealthController>();
         }
@@ -58,24 +60,13 @@ public class PlayerController : MonoBehaviour
             {
                 Death();
             }
-            if (transform.position.y <= 1f)
-            {
-                grounded = true;
-                if (animator != null)
-                {
-                    animator.SetBool("grounded", true);
-
-                }
-            }
             if (grounded == true)
             {
                 if (Input.GetAxisRaw("Jump") > 0)
                 {
                     _jumpSpeed = jumpSpeed;
-                    grounded = false;
                     animator.SetBool("grounded", false);
                     animator.SetTrigger("Jump");
-
                     playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
 
                 }
@@ -133,7 +124,20 @@ public class PlayerController : MonoBehaviour
     private void LateUpdate()
     {
         // transform.eulerAngles = new Vector3(0, transform.rotation.y, 0);
-        //Ray ray = new Ray(transform.position, -transform.up);
-        Debug.DrawRay(transform.position, -transform.up, Color.green);
+        if (animator != null)
+        {
+            Ray ray = new Ray(transform.position, -transform.up * rayLength);
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit))
+            {
+
+                animator.SetBool("grounded", true);
+            }
+            else
+            {
+                animator.SetBool("grounded", false);
+            }
+        }
+        //Debug.DrawRay(transform.position, -transform.up * rayLength, Color.green);
     }
 }
