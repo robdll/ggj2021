@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(playerRigidbody);
         }
 
         healthController = GetComponent<HealthController>();
