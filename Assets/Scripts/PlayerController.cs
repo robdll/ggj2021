@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
-    
+   
     private void Start() 
     {        
         healthController = GetComponent<HealthController>();
