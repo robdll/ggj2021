@@ -3,11 +3,13 @@ using DG.Tweening;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Animations;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
 
 [RequireComponent (typeof (HealthController))]
-public class PlayerController : MonoBehaviour, IDamageable {
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
     
-    //[SerializeField] GameObject cameraHolder;
+    [SerializeField] GameObject rayCamera;
 
     [SerializeField] Ability[] Abilities;
 
@@ -18,11 +20,10 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
-
     public Animator animator;
     HealthController healthController;
     float verticalLookRotation;
-    bool grounded;
+    bool grounded = true;
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
     
@@ -61,8 +62,8 @@ public class PlayerController : MonoBehaviour, IDamageable {
         }
         else { 
             // distruzione ignota di camere
-               Destroy(GetComponentInChildren<Camera>().gameObject);
-               Destroy(rb);
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(rb);
         }
 
         
@@ -76,18 +77,15 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     void Update()
     {
-
         Look();
         Move();
         Shoot();
+        SwitchWeapon();
+        Jump();
+    }
 
-        /*
-        for( int i=0; i<2; i++)
-        {
-            EquipAbility(i);
-            break;
-        }*/
-
+    void SwitchWeapon()
+    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             EquipAbility(1);
@@ -96,7 +94,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
         {
             EquipAbility(0);
         }
-
     }
 
     void Shoot()
@@ -134,17 +131,23 @@ public class PlayerController : MonoBehaviour, IDamageable {
         }
         prevAbilityIndex = abilityIndex;
 
+        if(PV.IsMine)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add("abilityIndex", abilityIndex);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
         
     }
 
         void Jump()
-    {
+        {
         /*
         var emitParams = new ParticleSystem.EmitParams();
         jumpFx.Emit(emitParams, jumpParticlesBurst);
         */
-        animator.SetBool("grounded", grounded);
-        if (Input.GetAxisRaw("Jump") > 0 &&  grounded)
+        //animator.SetBool("grounded", grounded);
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rb.AddForce(transform.up * jumpForce);
         }
@@ -190,14 +193,12 @@ public class PlayerController : MonoBehaviour, IDamageable {
         //animator.SetBool("grounded", grounded);
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
 
-
         if (animator != null)
         {
             if (this.healthController.lives <= 0)
             {
                 Death();
             }
-            Jump();
             Attack();
             SecondaryAttack();
         }
@@ -205,7 +206,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
      public void SetGroundedState(bool _grounded)
      {
-         grounded = _grounded;
+        grounded = _grounded;
      }
 
 
@@ -221,43 +222,32 @@ public class PlayerController : MonoBehaviour, IDamageable {
      }
 
      /*
-     public int score = 0;
-     public int frags = 0;
-     public int assists = 0;
      public delegate void OnPlayerDeathDelegate ();
      public event OnPlayerDeathDelegate deathEvent;
      private HealthController healthController;
-     public Animator animator;
-     private bool grounded = true;
      public float rollCooldown = 2;
      public float timeStamp;
 
-     public float jumpSpeed = 1;
-     private float _jumpSpeed = 0;
-     [SerializeField]
-     private float rayLength = 1;
-     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
-
-
-
-     void FixedUpdate () {
-
-
-     }
      public void Death () {
          animator.SetBool ("Death", true);
          if (deathEvent != null) {
              deathEvent ();
          }
      }
-
-
     */
     public void Death()
     {
 
     }
 
+    //update other player about weapon equipped
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (!PV.IsMine && targetPlayer == PV.Owner)
+        {
+            //EquipAbility((int)changedProps["itemIndex"]);
+        }
+    }
     public void TakeDamage(float damage)
     {
         Debug.Log("took damage" + damage);
