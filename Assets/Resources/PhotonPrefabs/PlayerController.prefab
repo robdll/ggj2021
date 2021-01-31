@@ -114,7 +114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4438732712301814044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.226, y: 0.194, z: 0.213}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 985892459040876848}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eyeInfo: {fileID: 11400000, guid: 2d58f974e4e60d64888433be47683eb6, type: 2}
   itemGameObject: {fileID: 4438732712301814044}
-  bulletPrefab: {fileID: 5622386014466557540, guid: f435f8ae0c2e8f7478deee88bd63e0db,
+  bulletPrefab: {fileID: 5622386014466557540, guid: ff8203f30a53f39469afd8b1fd5b9302,
     type: 3}
 --- !u!1 &6397625516722630576
 GameObject:

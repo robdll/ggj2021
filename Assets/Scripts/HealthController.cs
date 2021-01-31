@@ -10,6 +10,9 @@ public class HealthController : MonoBehaviour
     public OnDeath onDeath;
     public OnLifeGained onLifeGained;
     private PlayerController player;
+
+    public ParticleSystem explosion;
+
     private void Start()
     {
         onDeath += Death;
@@ -42,6 +45,7 @@ public class HealthController : MonoBehaviour
         }
         else
         {
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
        Debug.Log("YOU DIED!!!");        

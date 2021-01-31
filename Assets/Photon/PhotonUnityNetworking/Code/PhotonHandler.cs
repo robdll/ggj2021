@@ -26,7 +26,7 @@ namespace Photon.Pun
     /// </summary>
     public class PhotonHandler : ConnectionHandler, IInRoomCallbacks, IMatchmakingCallbacks
     {
-
+       // public GameObject roomManagerPrefab;
         private static PhotonHandler instance;
         internal static PhotonHandler Instance
         {
@@ -83,8 +83,14 @@ namespace Photon.Pun
             {
                 Destroy(this);
             }
-        }
-
+        /*
+            if(FindObjectOfType<RoomManager>() != null)
+            {
+                Instantiate(roomManagerPrefab);
+            }*/
+        }        
+      
+        
         protected virtual void OnEnable()
         {
 

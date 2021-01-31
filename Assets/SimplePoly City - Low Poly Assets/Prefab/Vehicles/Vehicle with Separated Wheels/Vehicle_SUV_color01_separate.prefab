@@ -404,6 +404,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400008}
+  - component: {fileID: 5378852073544318128}
   m_Layer: 0
   m_Name: Vehicle_SUV_color01_separate
   m_TagString: Untagged
@@ -430,3 +431,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5378852073544318128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3154b40d008ba42903f7e8192e5c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 1
+  hp: 1
+  maxHp: 1
+  explosion: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664,
+    type: 3}

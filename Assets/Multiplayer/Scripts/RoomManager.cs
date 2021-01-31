@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
         Instance = this;
     }
 
@@ -34,7 +34,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-
         // In Game Scene we build a Room manager prefab.
         // PhotonPrefabs must be in the resources older
         // unity excludes any file not referenced in the editor from the final build

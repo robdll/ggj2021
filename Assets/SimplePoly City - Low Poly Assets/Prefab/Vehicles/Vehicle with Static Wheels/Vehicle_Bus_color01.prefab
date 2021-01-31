@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: -4310789812578835950}
   - component: {fileID: 2030143671911243661}
+  - component: {fileID: -5437797135926201521}
   m_Layer: 0
   m_Name: Vehicle_Bus_color01
   m_TagString: Untagged
@@ -111,3 +112,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0d82ae0493e1c264bad0588fde0a3d8a, type: 3}
+--- !u!114 &-5437797135926201521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3154b40d008ba42903f7e8192e5c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 1
+  hp: 1
+  maxHp: 1
+  explosion: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664,
+    type: 3}

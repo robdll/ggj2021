@@ -126,3 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 1
   hp: 1
+  maxHp: 3
+  explosion: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664,
+    type: 3}
