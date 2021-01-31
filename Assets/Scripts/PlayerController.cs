@@ -57,8 +57,8 @@ public class PlayerController : MonoBehaviour {
 
     void Look()
     {
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
-        verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * mouseSensitivity);
+        //verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         verticalLookRotation += Mathf.Clamp(verticalLookRotation, -90f, 90f);
         // vertical axis for camera?
         //cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
@@ -67,15 +67,15 @@ public class PlayerController : MonoBehaviour {
 
     void Move()
     {
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        Vector3 moveDir = new Vector3(0, 0, Input.GetAxisRaw("Vertical")).normalized;
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
 
     void Jump()
     {
         animator.SetBool("grounded", grounded);
-        if (Input.GetAxisRaw("Jump") > 0 && grounded)
-        {animator.SetBool("grounded", grounded);
+        if (Input.GetAxisRaw("Jump") > 0 )
+        {
             rb.AddForce(transform.up * jumpForce);
         }
     }
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetAxisRaw("Interact") > 0)
         {
-            sprint();
+            //sprint();
             animator.SetTrigger("Interact");
         }
         //if (timeStamp <= Time.time)
