@@ -27,6 +27,18 @@ public class PlayerController : MonoBehaviour, IDamageable {
     public float sprintDuration = .3f;
     public float sprintChargingSpeed = 3;
 
+    /*
+    public float rollCooldown = 2;
+    public float timeStamp;
+
+    public float jumpSpeed = 1;
+    private float _jumpSpeed = 0;
+    public ParticleSystem rollFx;
+    public ParticleSystem jumpFx;
+    public int jumpParticlesBurst = 30;
+    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
+    */
+
     Rigidbody rb;
     PhotonView PV;
 
@@ -75,7 +87,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
         verticalLookRotation += Mathf.Clamp(verticalLookRotation, -90f, 90f);
         // vertical axis for camera?
         //cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
-
     }
 
     void Move()
@@ -86,6 +97,10 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     void Jump()
     {
+        /*
+        var emitParams = new ParticleSystem.EmitParams();
+        jumpFx.Emit(emitParams, jumpParticlesBurst);
+        */
         animator.SetBool("grounded", grounded);
         if (Input.GetAxisRaw("Jump") > 0 &&  grounded)
         {
@@ -112,10 +127,17 @@ public class PlayerController : MonoBehaviour, IDamageable {
             //sprint();
             animator.SetTrigger("Interact");
         }
-        //if (timeStamp <= Time.time)
-        //{
-        //  timeStamp = Time.time + rollCooldown;
-        //}
+    }
+
+    private void sprint()
+    {
+        //  Invoke("stopRollFx", .5f);
+        Sequence sprintSequence = DOTween.Sequence();
+        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
+        sprintSequence.AppendCallback(() => { rollFx.Play(); });
+        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintSpeed, sprintSpeedUpTime));
+        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, walkSpeed, sprintDuration).SetEase(Ease.OutQuad));
+        sprintSequence.AppendCallback(() => { rollFx.Stop(); });
     }
 
     void FixedUpdate()
@@ -125,6 +147,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
         //animator.SetBool("grounded", grounded);
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+
 
         if (animator != null)
         {
@@ -143,16 +166,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
          grounded = _grounded;
      }
 
-     private void sprint()
-     {
-         //  Invoke("stopRollFx", .5f);
-         Sequence sprintSequence = DOTween.Sequence();
-         sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
-         sprintSequence.AppendCallback(() => { rollFx.Play(); });
-         sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintSpeed, sprintSpeedUpTime));
-         sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, walkSpeed , sprintDuration).SetEase(Ease.OutQuad));
-         sprintSequence.AppendCallback(() => { rollFx.Stop(); });
-     }
+
 
      private void stopSprint()
      {
