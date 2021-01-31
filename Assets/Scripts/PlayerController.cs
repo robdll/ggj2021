@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
     public Animator animator;
-    
+    HealthController healthController;
     float verticalLookRotation;
     bool grounded;
     Vector3 smoothMoveVelocity;
@@ -40,17 +40,18 @@ public class PlayerController : MonoBehaviour {
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
 
-        /*
+        
         healthController = GetComponent<HealthController>();
         if (!healthController)
         {
             healthController = gameObject.AddComponent<HealthController>();
-        }*/
+        }
         animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
+
         Look();
         Move();
     }
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour {
     void Jump()
     {
         animator.SetBool("grounded", grounded);
-        if (Input.GetAxisRaw("Jump") > 0 )
+        if (Input.GetAxisRaw("Jump") > 0 &&  grounded)
         {
             rb.AddForce(transform.up * jumpForce);
         }
@@ -110,76 +111,82 @@ public class PlayerController : MonoBehaviour {
         if (PV && !PV.IsMine)
             return;
 
+        //animator.SetBool("grounded", grounded);
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
-        Jump();
-        Attack();
-        SecondaryAttack();
-        /*if (animator != null)
+
+        if (animator != null)
         {
             if (this.healthController.lives <= 0)
             {
                 Death();
             }
-        }*/
-    }
-
-    public void SetGroundedState(bool _grounded)
-    {
-        grounded = _grounded;
-    }
-
-    private void sprint()
-    {
-        //  Invoke("stopRollFx", .5f);
-        Sequence sprintSequence = DOTween.Sequence();
-        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
-        sprintSequence.AppendCallback(() => { rollFx.Play(); });
-        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintSpeed, sprintSpeedUpTime));
-        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, walkSpeed , sprintDuration).SetEase(Ease.OutQuad));
-        sprintSequence.AppendCallback(() => { rollFx.Stop(); });
-    }
-
-    private void stopSprint()
-    {
-        //movementSpeed = defaultSpeed;
-    }
-
-    private void stopRollFx()
-    {
-        rollFx.Stop();
-    }
-
-    /*
-    public int score = 0;
-    public int frags = 0;
-    public int assists = 0;
-    public delegate void OnPlayerDeathDelegate ();
-    public event OnPlayerDeathDelegate deathEvent;
-    private HealthController healthController;
-    public Animator animator;
-    private bool grounded = true;
-    public float rollCooldown = 2;
-    public float timeStamp;
-
-    public float jumpSpeed = 1;
-    private float _jumpSpeed = 0;
-    [SerializeField]
-    private float rayLength = 1;
-    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
-
-
-
-    void FixedUpdate () {
-
-
-    }
-    public void Death () {
-        animator.SetBool ("Death", true);
-        if (deathEvent != null) {
-            deathEvent ();
+            Jump();
+            Attack();
+            SecondaryAttack();
         }
-    }
-   
+     }
 
-   */
+     public void SetGroundedState(bool _grounded)
+     {
+         grounded = _grounded;
+     }
+
+     private void sprint()
+     {
+         //  Invoke("stopRollFx", .5f);
+         Sequence sprintSequence = DOTween.Sequence();
+         sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
+         sprintSequence.AppendCallback(() => { rollFx.Play(); });
+         sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintSpeed, sprintSpeedUpTime));
+         sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, walkSpeed , sprintDuration).SetEase(Ease.OutQuad));
+         sprintSequence.AppendCallback(() => { rollFx.Stop(); });
+     }
+
+     private void stopSprint()
+     {
+         //movementSpeed = defaultSpeed;
+     }
+
+     private void stopRollFx()
+     {
+         rollFx.Stop();
+     }
+
+     /*
+     public int score = 0;
+     public int frags = 0;
+     public int assists = 0;
+     public delegate void OnPlayerDeathDelegate ();
+     public event OnPlayerDeathDelegate deathEvent;
+     private HealthController healthController;
+     public Animator animator;
+     private bool grounded = true;
+     public float rollCooldown = 2;
+     public float timeStamp;
+
+     public float jumpSpeed = 1;
+     private float _jumpSpeed = 0;
+     [SerializeField]
+     private float rayLength = 1;
+     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
+
+
+
+     void FixedUpdate () {
+
+
+     }
+     public void Death () {
+         animator.SetBool ("Death", true);
+         if (deathEvent != null) {
+             deathEvent ();
+         }
+     }
+
+
+    */
+    public void Death()
+    {
+
+    }
 }
