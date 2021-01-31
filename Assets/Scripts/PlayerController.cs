@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 [RequireComponent (typeof (HealthController))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IDamageable {
     
     [SerializeField] GameObject cameraHolder;
 
@@ -200,5 +200,10 @@ public class PlayerController : MonoBehaviour {
     public void Death()
     {
 
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("took damage" + damage);
     }
 }
