@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 [RequireComponent (typeof (HealthController))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour 
+{
     public int score = 0;
     public int frags = 0;
     public int assists = 0;
@@ -25,34 +26,38 @@ public class PlayerController : MonoBehaviour {
     public float sprintChargingSpeed = 3;
     public float rollCooldown = 2;
     public float timeStamp;
-
+    float maxVerticalSpeed = 15f;
     public float jumpSpeed = 1;
-    private float _jumpSpeed = 0;
-    [SerializeField]
-    private float rayLength = 1;
     public ParticleSystem rollFx;
-    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
     PhotonView PV;
-    private void Awake () {
+    private void Awake () 
+    {
         PV = GetComponent<PhotonView>();
     }
 
     private void Start() 
     {
-        if (PV && !PV.IsMine) {
+        if (PV && !PV.IsMine) 
+        {
             Destroy (GetComponentInChildren<Camera> ().gameObject);
         }
 
         healthController = GetComponent<HealthController>();
-        if (!healthController) {
+        if (!healthController) 
+        {
             healthController = gameObject.AddComponent<HealthController>();
         }
         playerRigidbody = GetComponent<Rigidbody> ();
         //animator = GetComponentInChildren<Animator>();
     }
 
-    void FixedUpdate () {
+    void FixedUpdate () 
+    {
+        Vector3 myVelocity = new Vector3 (playerRigidbody.velocity.x, Mathf.Clamp(playerRigidbody.velocity.y, -100f, maxVerticalSpeed), playerRigidbody.velocity.z);
+        playerRigidbody.velocity = myVelocity;
+
+        Debug.Log(playerRigidbody.velocity.y);
         if (PV && !PV.IsMine)
             return;
 
@@ -68,21 +73,24 @@ public class PlayerController : MonoBehaviour {
             {
                 if (Input.GetAxisRaw("Jump") > 0)
                 {
-                    _jumpSpeed = jumpSpeed;
-                    //animator.SetBool("grounded", true);
                     animator.SetTrigger("Jump");
-                    playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
+                    playerRigidbody.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);                    
                 }
             }
 
-            if (Input.GetAxisRaw ("Attack") > 0 && animator.GetBool ("Attacking") == false) {
+            if (Input.GetAxisRaw ("Attack") > 0 && animator.GetBool ("Attacking") == false) 
+            {
                 animator.SetBool ("Attacking", true);
-            } else {
+            } 
+            else 
+            {
                 animator.SetBool ("Attacking", false);
             }
 
-            if (Input.GetAxisRaw ("Interact") > 0) {
-                if (timeStamp <= Time.time) {
+            if (Input.GetAxisRaw ("Interact") > 0) 
+            {
+                if (timeStamp <= Time.time) 
+                {
                     timeStamp = Time.time + rollCooldown;
                     sprint ();
                     animator.SetTrigger ("Interact");
@@ -93,9 +101,12 @@ public class PlayerController : MonoBehaviour {
         }
 
     }
-    public void Death () {
+
+    public void Death () 
+    {
         animator.SetBool ("Death", true);
-        if (deathEvent != null) {
+        if (deathEvent != null) 
+        {
             deathEvent ();
         }
     }

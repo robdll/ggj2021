@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5093169134388967975}
   - component: {fileID: 2661855619959806848}
+  - component: {fileID: 2750098896709997128}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: GroundCheckTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3311101734324347652}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.177, z: -0.145}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.145}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 7759086327195144268}
   m_RootOrder: 2
@@ -44,6 +45,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2750098896709997128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311101734324347652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ee9c6d77fe157408959465bdc64a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7759086327195144304
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +136,7 @@ MonoBehaviour:
   rollCooldown: 2
   timeStamp: 0
   jumpSpeed: 10
-  rayLength: 0.2
+  rotationSpeedMod: 3
   rollFx: {fileID: 1803210549055303140}
 --- !u!54 &7759086327195144270
 Rigidbody:
@@ -322,7 +335,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8621620921536565918}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ac75ec7585eef84f8edc513981c9676, type: 3}
   m_Name: 
