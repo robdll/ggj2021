@@ -7,15 +7,17 @@ using System.IO;
 public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
-
+    public Spawner[] allSpawners;
+    private bool firstTime = true;
     void Awake()
     {
         PV = GetComponent<PhotonView>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        if(PV.IsMine)
+        allSpawners = FindObjectsOfType<Spawner>();
+        if (PV.IsMine)
         {
             CreateController();
         }
@@ -23,7 +25,10 @@ public class PlayerManager : MonoBehaviour
 
     void CreateController()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), Vector3.zero, Quaternion.identity);
+        int randomSpawnerIndex = Random.Range(0, allSpawners.Length-1);
+        Transform spawningPoint = allSpawners[randomSpawnerIndex].transform;
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), spawningPoint.position, Quaternion.identity);
         Debug.Log("init controller here");
+       // firstTime = false;
     }
 }
