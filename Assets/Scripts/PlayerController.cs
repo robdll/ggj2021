@@ -6,6 +6,55 @@ using UnityEngine.Animations;
 
 [RequireComponent (typeof (HealthController))]
 public class PlayerController : MonoBehaviour {
+
+    [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+
+    float verticalLookRotation;
+    bool grounded;
+    Vector3 smoothMoveVelocity;
+    Vector3 moveAmount;
+
+    Rigidbody rb;
+    PhotonView PV;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        PV = GetComponent<PhotonView>();
+    }
+
+    private void Start()
+    {
+        if (PV && !PV.IsMine)
+        {
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+        }
+
+        /*
+        healthController = GetComponent<HealthController>();
+        if (!healthController)
+        {
+            healthController = gameObject.AddComponent<HealthController>();
+        }*/
+        //animator = GetComponentInChildren<Animator>();
+    }
+
+    void Update()
+    {
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
+    }
+
+    void FixedUpdate()
+    {
+        if (PV && !PV.IsMine)
+            return;
+    }
+
+    public void SetGroundedState(bool status)
+    {
+        grounded = status;
+    }
+    /*
     public int score = 0;
     public int frags = 0;
     public int assists = 0;
@@ -33,24 +82,7 @@ public class PlayerController : MonoBehaviour {
     public ParticleSystem rollFx;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
-    PhotonView PV;
-    private void Awake () {
-        PV = GetComponent<PhotonView>();
-    }
 
-    private void Start() 
-    {
-        if (PV && !PV.IsMine) {
-            Destroy (GetComponentInChildren<Camera> ().gameObject);
-        }
-
-        healthController = GetComponent<HealthController>();
-        if (!healthController) {
-            healthController = gameObject.AddComponent<HealthController>();
-        }
-        playerRigidbody = GetComponent<Rigidbody> ();
-        //animator = GetComponentInChildren<Animator>();
-    }
 
     void FixedUpdate () {
         if (PV && !PV.IsMine)
@@ -135,8 +167,5 @@ public class PlayerController : MonoBehaviour {
         rollFx.Stop ();
     }
 
-    public void SetGroundedState(bool status)
-    {
-        grounded = status;
-    }
+   */
 }

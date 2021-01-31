@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
     public Spawner[] allSpawners;
-    private bool firstTime = true;
+    //private bool firstTime = true;
     void Awake()
     {
         PV = GetComponent<PhotonView>();

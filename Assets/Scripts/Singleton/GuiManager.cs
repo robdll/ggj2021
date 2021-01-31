@@ -6,11 +6,11 @@ public class GuiManager : MonoBehaviour
 {
     private void Start() 
     {
-        FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
+        //FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
     }
 
     public void OnPlayerDeath()
     {
-        FindObjectOfType<PlayerController>().deathEvent -= OnPlayerDeath;
+        //FindObjectOfType<PlayerController>().deathEvent -= OnPlayerDeath;
     }
 }

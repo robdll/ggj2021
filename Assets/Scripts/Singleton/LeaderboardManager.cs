@@ -21,7 +21,7 @@ public class LeaderboardManager : MonoBehaviour
         /*Alla morte del player e lo rimuovo dall'evento tramite -=*/
         //FindObjectOfType<PlayerController>().deathEvent -= OnPlayerDeath;
     }
-
+    /*
     private void OnGameOver(PlayerController[] allPlayers)
     {
         string playerNameMostAssist = GetMVP(allPlayers, player => player.assists);
@@ -42,5 +42,5 @@ public class LeaderboardManager : MonoBehaviour
             }            
         }
         return name;
-    }
+    }*/
 }
