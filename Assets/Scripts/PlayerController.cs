@@ -6,11 +6,11 @@ using UnityEngine.Animations;
 
 [RequireComponent (typeof (HealthController))]
 public class PlayerController : MonoBehaviour {
-
     
     [SerializeField] GameObject cameraHolder;
 
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+
     public Animator animator;
     
     float verticalLookRotation;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
         PV = GetComponent<PhotonView>();
     }
 
-    private void Start()
+    void Start()
     {
         if (PV && !PV.IsMine)
         {

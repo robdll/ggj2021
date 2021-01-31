@@ -10,7 +10,7 @@ public class GroundCheck : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
     }
 
-    void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject == playerController.gameObject)
         {
@@ -19,7 +19,7 @@ public class GroundCheck : MonoBehaviour
         playerController.SetGroundedState(true);
     }
 
-    void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.gameObject == playerController.gameObject)
         {
@@ -28,7 +28,7 @@ public class GroundCheck : MonoBehaviour
         playerController.SetGroundedState(false);
     }
 
-    void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.gameObject == playerController.gameObject)
         {
@@ -37,7 +37,7 @@ public class GroundCheck : MonoBehaviour
         playerController.SetGroundedState(true);
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == playerController.gameObject)
         {
@@ -46,7 +46,7 @@ public class GroundCheck : MonoBehaviour
         playerController.SetGroundedState(true);
     }
 
-    void OnCollisionExit(Collision collision)
+    public void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject == playerController.gameObject)
         {
@@ -55,7 +55,7 @@ public class GroundCheck : MonoBehaviour
         playerController.SetGroundedState(false);
     }
 
-    private void OnCollisionStay(Collision collision)
+    public void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject == playerController.gameObject)
         {
