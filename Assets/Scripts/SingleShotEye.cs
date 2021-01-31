@@ -27,7 +27,7 @@ public class SingleShotEye : Eye
         //hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage( ((EyesInfo)eyeInfo).damage );
         //   Debug.Log("we hit" + hit.collider.gameObject.name);
         // }
-        GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        GameObject go = Instantiate(bulletPrefab, transform.position + transform.forward, Quaternion.identity);
         PlayerController pc = GetComponentInParent<PlayerController>();
         Bullet bullet = go.GetComponent<Bullet>();
         bullet.player = pc;

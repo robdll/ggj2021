@@ -887,15 +887,17 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.35355338
       objectReference: {fileID: 0}
-    - target: {fileID: 6596534765230243690, guid: b8ee657c6800ab849bb30b4375d02323,
-        type: 3}
-      propertyPath: m_Range
-      value: 20
+    - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6596534765230243690, guid: b8ee657c6800ab849bb30b4375d02323,
-        type: 3}
-      propertyPath: m_SpotAngle
-      value: 42.4
+    - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
@@ -912,6 +914,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1479328050}
     m_Modifications:
+    - target: {fileID: 100000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_Name
+      value: Props_Street Light
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
       propertyPath: m_RootOrder
       value: 200
@@ -944,15 +950,17 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.14644662
       objectReference: {fileID: 0}
-    - target: {fileID: 6596534765230243690, guid: b8ee657c6800ab849bb30b4375d02323,
-        type: 3}
-      propertyPath: m_Range
-      value: 20
+    - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6596534765230243690, guid: b8ee657c6800ab849bb30b4375d02323,
-        type: 3}
-      propertyPath: m_SpotAngle
-      value: 42.4
+    - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}

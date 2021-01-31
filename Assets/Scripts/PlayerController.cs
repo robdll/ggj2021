@@ -4,23 +4,23 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Animations;
 
-[RequireComponent (typeof (HealthController))]
-public class PlayerController : MonoBehaviour, IDamageable {
-    
+[RequireComponent(typeof(HealthController))]
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
+
     [SerializeField] GameObject cameraHolder;
 
     [SerializeField] SingleShotEye activeAbility;
 
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
-
+    PlayerManager PM;
     public Animator animator;
     HealthController healthController;
     float verticalLookRotation;
     bool grounded;
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
-    
+
     //secondary attack variable
     public ParticleSystem rollFx;
     public float sprintSpeedUpTime = .01f;
@@ -54,8 +54,8 @@ public class PlayerController : MonoBehaviour, IDamageable {
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
+        PM = FindObjectOfType<PlayerManager>();
 
-        
         healthController = GetComponent<HealthController>();
         if (!healthController)
         {
@@ -66,7 +66,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     void Update()
     {
-
         Look();
         Move();
         Shoot();
@@ -102,7 +101,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
         jumpFx.Emit(emitParams, jumpParticlesBurst);
         */
         animator.SetBool("grounded", grounded);
-        if (Input.GetAxisRaw("Jump") > 0 &&  grounded)
+        if (Input.GetAxisRaw("Jump") > 0 && grounded)
         {
             rb.AddForce(transform.up * jumpForce);
         }
@@ -159,61 +158,64 @@ public class PlayerController : MonoBehaviour, IDamageable {
             Attack();
             SecondaryAttack();
         }
-     }
+    }
 
-     public void SetGroundedState(bool _grounded)
-     {
-         grounded = _grounded;
-     }
+    public void SetGroundedState(bool _grounded)
+    {
+        grounded = _grounded;
+    }
 
-
-
-     private void stopSprint()
-     {
-         //movementSpeed = defaultSpeed;
-     }
-
-     private void stopRollFx()
-     {
-         rollFx.Stop();
-     }
-
-     /*
-     public int score = 0;
-     public int frags = 0;
-     public int assists = 0;
-     public delegate void OnPlayerDeathDelegate ();
-     public event OnPlayerDeathDelegate deathEvent;
-     private HealthController healthController;
-     public Animator animator;
-     private bool grounded = true;
-     public float rollCooldown = 2;
-     public float timeStamp;
-
-     public float jumpSpeed = 1;
-     private float _jumpSpeed = 0;
-     [SerializeField]
-     private float rayLength = 1;
-     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER");
+        PhotonNetwork.LoadLevel(0);
+        Destroy(gameObject);
+    }
 
 
+    private void stopSprint()
+    {
+        //movementSpeed = defaultSpeed;
+    }
 
-     void FixedUpdate () {
+    private void stopRollFx()
+    {
+        rollFx.Stop();
+    }
+
+    /*
+    public int score = 0;
+    public int frags = 0;
+    public int assists = 0;
+    public delegate void OnPlayerDeathDelegate ();
+    public event OnPlayerDeathDelegate deathEvent;
+    private HealthController healthController;
+    public Animator animator;
+    private bool grounded = true;
+    public float rollCooldown = 2;
+    public float timeStamp;
+
+    public float jumpSpeed = 1;
+    private float _jumpSpeed = 0;
+    [SerializeField]
+    private float rayLength = 1;
+    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
 
-     }
-     public void Death () {
-         animator.SetBool ("Death", true);
-         if (deathEvent != null) {
-             deathEvent ();
-         }
-     }
 
+    void FixedUpdate () {
 
     */
+   
     public void Death()
-    {
+    {   
+        animator.SetBool("Death", true);       
+    }
 
+
+    public void Respawn()
+    {
+        PM.Respawn(transform);
     }
 
     public void TakeDamage(float damage)

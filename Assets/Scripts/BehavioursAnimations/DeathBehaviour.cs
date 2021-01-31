@@ -19,9 +19,10 @@ public class DeathBehaviour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-     //  PlayerController player = animator.gameObject.GetComponent<PlayerController>();
-        Destroy(animator.gameObject);
-        ScenesManager.Instance.SceneChange(0);
+        PlayerController player = animator.gameObject.GetComponent<PlayerController>();
+        player.Respawn();
+        //Destroy(animator.gameObject);
+        //ScenesManager.Instance.SceneChange(0);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
