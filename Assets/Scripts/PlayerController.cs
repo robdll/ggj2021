@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
+    public ParticleSystem rollFx;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
     PhotonView PV;
@@ -77,15 +78,13 @@ public class PlayerController : MonoBehaviour {
             }
 
             if (Input.GetAxisRaw ("Attack") > 0 && animator.GetBool ("Attacking") == false) {
-                /*creo collider d'attacco*/
-                sprint();
                 animator.SetBool ("Attacking", true);
             } else {
                 animator.SetBool ("Attacking", false);
             }
 
             if (Input.GetAxisRaw ("Interact") > 0) {
-                /*usa oggetto*/
+                sprint();
                 animator.SetTrigger ("Interact");
             }
             Movement ();
@@ -116,22 +115,22 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void sprint () {
+        
+        //  Invoke("stopRollFx", .5f);
         Sequence sprintSequence = DOTween.Sequence();
         sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
+        sprintSequence.AppendCallback(() =>{rollFx.Play();});
         sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintSpeedUpTime));
         sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, defaultSpeed, sprintDuration).SetEase(Ease.OutQuad));
-        // mySequence.PrependInterval(sprintDuration);
-
-
-        // DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintDelay);
-        // DG.Tweening.DOTween.To(value => Time.timeScale = value, 1, 0, 0.4f).SetEase(Ease.InCubic));
-        // movementSpeed = sprintSpeed;
-        // Invoke ("stopSprint", sprintDuration);
+        sprintSequence.AppendCallback(() =>{rollFx.Stop();});
     }
     
     private void stopSprint () {
         movementSpeed = defaultSpeed;
+    }
 
+    private void stopRollFx(){
+        rollFx.Stop();
     }
 
     private void LateUpdate () {
