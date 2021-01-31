@@ -56,24 +56,22 @@ public class PlayerController : MonoBehaviour {
         if (PV && !PV.IsMine)
             return;
 
-        IsGroundedCheck();
-        Debug.Log("transform.position.y  : " + transform.position.y);
-        Debug.Log("grounded  : " + grounded);
         if (animator != null)
-        {
+        {            
             if (this.healthController.lives <= 0)
             {
                 Death();
             }
-            if(grounded == true)
+
+            animator.SetBool("grounded", grounded);
+            if (grounded)
             {
-                if (Input.GetAxisRaw("Jump") > 0 && grounded == true)
+                if (Input.GetAxisRaw("Jump") > 0)
                 {
                     _jumpSpeed = jumpSpeed;
-                    animator.SetBool("grounded", grounded);
+                    //animator.SetBool("grounded", true);
                     animator.SetTrigger("Jump");
                     playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
-
                 }
             }
 
@@ -137,24 +135,8 @@ public class PlayerController : MonoBehaviour {
         rollFx.Stop ();
     }
 
-    public void IsGroundedCheck()
+    public void SetGroundedState(bool status)
     {
-        if (animator != null)
-        {
-            // bool isGrounded;
-            Ray ray = new Ray(transform.position, -transform.up * rayLength);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, rayLength))
-            {
-                //animator.SetBool("grounded", true);
-                grounded = true;
-
-            }
-            else
-            {
-                //animator.SetBool("grounded", false);
-                grounded = false;
-            }
-        }
+        grounded = status;
     }
 }
