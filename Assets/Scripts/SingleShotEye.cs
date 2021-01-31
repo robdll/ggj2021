@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class SingleShotEye : Eye
 {
-    [SerializeField] Camera cam;
+   // Camera cam;
+    public GameObject bulletPrefab;
+
+    private void OnEnable()
+    {
+      //  cam = GetComponentInParent<Camera>();
+    }
     public override void Use()
     {
         Debug.Log("Using eyes" + eyeInfo.abilityName );
@@ -13,13 +19,19 @@ public class SingleShotEye : Eye
 
     void Shoot()
     {
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        ray.origin = cam.transform.position;
-        if(Physics.Raycast(ray, out RaycastHit hit))
-        {
-            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage( ((EyesInfo)eyeInfo).damage );
-            Debug.Log("we hit" + hit.collider.gameObject.name);
-        }
+        // Ray ray = new Ray(transform.position, transform.forward);
+        ////ray.origin = cam.transform.position;
+        // if(Physics.Raycast(ray, out RaycastHit hit))
+        // {
+
+        //hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage( ((EyesInfo)eyeInfo).damage );
+        //   Debug.Log("we hit" + hit.collider.gameObject.name);
+        // }
+        GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        PlayerController pc = GetComponentInParent<PlayerController>();
+        Bullet bullet = go.GetComponent<Bullet>();
+        bullet.player = pc;
+      //  go.GetComponent<Rigidbody>().AddRelativeForce(transform.forward * bulletSpeed);
     }
 }
 
