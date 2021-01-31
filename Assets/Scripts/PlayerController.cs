@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour {
     
     [SerializeField] GameObject cameraHolder;
 
+    [SerializeField] SingleShotEye activeAbility;
+
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+
 
     public Animator animator;
     HealthController healthController;
@@ -54,6 +57,15 @@ public class PlayerController : MonoBehaviour {
 
         Look();
         Move();
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            activeAbility.Use();
+        }
     }
 
     void Look()
