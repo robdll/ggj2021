@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 3311101734324347652}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.177, z: -0.145}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7759086327195144268}
   m_RootOrder: 1
@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ee9c6d77fe157408959465bdc64a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 7759086327195144269}
 --- !u!1 &7759086327195144304
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,13 +155,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 2136788343807581751}
-  mouseSensitivity: 3
-  sprintSpeed: 20
-  walkSpeed: 10
+  mouseSensitivity: 2.5
+  sprintSpeed: 24
+  walkSpeed: 12
   jumpForce: 300
   smoothTime: 0.15
-  animator: {fileID: 0}
-  rollFx: {fileID: 0}
+  animator: {fileID: 6380983203285993634}
+  rollFx: {fileID: 1803210549055303140}
   sprintSpeedUpTime: 0.01
   sprintDuration: 0.3
   sprintChargingSpeed: 3
@@ -511,6 +512,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab1112643ee572748b01dede71158272, type: 3}
+--- !u!198 &1803210549055303140 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19800000, guid: ab1112643ee572748b01dede71158272,
+    type: 3}
+  m_PrefabInstance: {fileID: 1803210549035774500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7197472992257498032
 PrefabInstance:
   m_ObjectHideFlags: 0
