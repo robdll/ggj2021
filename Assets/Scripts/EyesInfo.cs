@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Abilities/New Eye")]
 public class EyesInfo : PlayerAbilityInfo
 {
-
+    public float damage;
 }

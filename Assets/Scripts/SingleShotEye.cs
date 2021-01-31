@@ -17,6 +17,7 @@ public class SingleShotEye : Eye
         ray.origin = cam.transform.position;
         if(Physics.Raycast(ray, out RaycastHit hit))
         {
+            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage( ((EyesInfo)eyeInfo).damage );
             Debug.Log("we hit" + hit.collider.gameObject.name);
         }
     }

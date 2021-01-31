@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: CatEye
   m_EditorClassIdentifier: 
   abilityName: basic shot
+  damage: 15
