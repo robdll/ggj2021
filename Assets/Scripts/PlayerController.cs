@@ -7,12 +7,22 @@ using UnityEngine.Animations;
 [RequireComponent (typeof (HealthController))]
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+    
+    [SerializeField] GameObject cameraHolder;
 
+    [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+    public Animator animator;
+    
     float verticalLookRotation;
     bool grounded;
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
+    
+    //secondary attack variable
+    public ParticleSystem rollFx;
+    public float sprintSpeedUpTime = .01f;
+    public float sprintDuration = .3f;
+    public float sprintChargingSpeed = 3;
 
     Rigidbody rb;
     PhotonView PV;
@@ -36,24 +46,109 @@ public class PlayerController : MonoBehaviour {
         {
             healthController = gameObject.AddComponent<HealthController>();
         }*/
-        //animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
+        Look();
+        Move();
+    }
+
+    void Look()
+    {
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
+        verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+        verticalLookRotation += Mathf.Clamp(verticalLookRotation, -90f, 90f);
+        // vertical axis for camera?
+        //cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
+
+    }
+
+    void Move()
+    {
+        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+    }
+
+    void Jump()
+    {
+        animator.SetBool("grounded", grounded);
+        if (Input.GetAxisRaw("Jump") > 0 && grounded)
+        {animator.SetBool("grounded", grounded);
+            rb.AddForce(transform.up * jumpForce);
+        }
+    }
+
+    void Attack()
+    {
+        if (Input.GetAxisRaw("Attack") > 0 && animator.GetBool("Attacking") == false)
+        {
+            animator.SetBool("Attacking", true);
+        }
+        else
+        {
+            animator.SetBool("Attacking", false);
+        }
+    }
+
+    void SecondaryAttack()
+    {
+        if (Input.GetAxisRaw("Interact") > 0)
+        {
+            sprint();
+            animator.SetTrigger("Interact");
+        }
+        //if (timeStamp <= Time.time)
+        //{
+        //  timeStamp = Time.time + rollCooldown;
+        //}
     }
 
     void FixedUpdate()
     {
         if (PV && !PV.IsMine)
             return;
+
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        Jump();
+        Attack();
+        SecondaryAttack();
+        /*if (animator != null)
+        {
+            if (this.healthController.lives <= 0)
+            {
+                Death();
+            }
+        }*/
     }
 
-    public void SetGroundedState(bool status)
+    public void SetGroundedState(bool _grounded)
     {
-        grounded = status;
+        grounded = _grounded;
     }
+
+    private void sprint()
+    {
+        //  Invoke("stopRollFx", .5f);
+        Sequence sprintSequence = DOTween.Sequence();
+        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
+        sprintSequence.AppendCallback(() => { rollFx.Play(); });
+        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, sprintSpeed, sprintSpeedUpTime));
+        sprintSequence.Append(DOTween.To(() => walkSpeed, x => walkSpeed = x, walkSpeed , sprintDuration).SetEase(Ease.OutQuad));
+        sprintSequence.AppendCallback(() => { rollFx.Stop(); });
+    }
+
+    private void stopSprint()
+    {
+        //movementSpeed = defaultSpeed;
+    }
+
+    private void stopRollFx()
+    {
+        rollFx.Stop();
+    }
+
     /*
     public int score = 0;
     public int frags = 0;
@@ -63,15 +158,6 @@ public class PlayerController : MonoBehaviour {
     private HealthController healthController;
     public Animator animator;
     private bool grounded = true;
-    private Rigidbody playerRigidbody;
-    private Vector3 direction;
-    public float rotateSpeed = 1;
-    public float defaultSpeed = 12;
-    public float movementSpeed = 1;
-    public float sprintSpeedUpTime = .01f;
-    public float sprintDuration = .3f;
-    public float sprintSpeed = 60;
-    public float sprintChargingSpeed = 3;
     public float rollCooldown = 2;
     public float timeStamp;
 
@@ -79,50 +165,12 @@ public class PlayerController : MonoBehaviour {
     private float _jumpSpeed = 0;
     [SerializeField]
     private float rayLength = 1;
-    public ParticleSystem rollFx;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
 
 
     void FixedUpdate () {
-        if (PV && !PV.IsMine)
-            return;
 
-        if (animator != null)
-        {            
-            if (this.healthController.lives <= 0)
-            {
-                Death();
-            }
-
-            animator.SetBool("grounded", grounded);
-            if (grounded)
-            {
-                if (Input.GetAxisRaw("Jump") > 0)
-                {
-                    _jumpSpeed = jumpSpeed;
-                    //animator.SetBool("grounded", true);
-                    animator.SetTrigger("Jump");
-                    playerRigidbody.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
-                }
-            }
-
-            if (Input.GetAxisRaw ("Attack") > 0 && animator.GetBool ("Attacking") == false) {
-                animator.SetBool ("Attacking", true);
-            } else {
-                animator.SetBool ("Attacking", false);
-            }
-
-            if (Input.GetAxisRaw ("Interact") > 0) {
-                if (timeStamp <= Time.time) {
-                    timeStamp = Time.time + rollCooldown;
-                    sprint ();
-                    animator.SetTrigger ("Interact");
-                }
-
-            }
-            Movement ();
-        }
 
     }
     public void Death () {
@@ -131,41 +179,7 @@ public class PlayerController : MonoBehaviour {
             deathEvent ();
         }
     }
-
-    public void Movement () {
-        float horizontalMove = Input.GetAxisRaw ("Horizontal");
-        float verticalMove = Input.GetAxisRaw ("Vertical");
-
-        direction = new Vector3 (horizontalMove, 0.0f, verticalMove);
-
-        if (direction != Vector3.zero) {
-            transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (direction), rotateSpeed * Time.deltaTime);
-        } else {
-            animator.SetInteger ("Move", 0);
-        }
-
-        playerRigidbody.MovePosition (transform.position + movementSpeed * Time.deltaTime * direction);
-        animator.SetInteger ("Move", 1);
-    }
-
-    private void sprint () {
-
-        //  Invoke("stopRollFx", .5f);
-        Sequence sprintSequence = DOTween.Sequence ();
-        sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, sprintChargingSpeed, .3f).SetEase (Ease.OutQuad));
-        sprintSequence.AppendCallback (() => { rollFx.Play (); });
-        sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintSpeedUpTime));
-        sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, defaultSpeed, sprintDuration).SetEase (Ease.OutQuad));
-        sprintSequence.AppendCallback (() => { rollFx.Stop (); });
-    }
-
-    private void stopSprint () {
-        movementSpeed = defaultSpeed;
-    }
-
-    private void stopRollFx () {
-        rollFx.Stop ();
-    }
+   
 
    */
 }
