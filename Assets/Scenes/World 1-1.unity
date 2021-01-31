@@ -4321,6 +4321,46 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: ringBufferMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: NoiseModule.strength.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.8207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.8207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803210549055303140, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.8207547
+      objectReference: {fileID: 0}
     - target: {fileID: 7759086327195144268, guid: 0e4f87110f21fc747aee05eccf254dd5,
         type: 3}
       propertyPath: m_RootOrder
@@ -4390,6 +4430,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759086327195144269, guid: 0e4f87110f21fc747aee05eccf254dd5,
+        type: 3}
+      propertyPath: sprintSpeed
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7759086327195144269, guid: 0e4f87110f21fc747aee05eccf254dd5,
         type: 3}

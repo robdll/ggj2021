@@ -1,9 +1,8 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Animations;
-using DG.Tweening;
-
 
 [RequireComponent (typeof (HealthController))]
 public class PlayerController : MonoBehaviour {
@@ -24,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     public float sprintDuration = .3f;
     public float sprintSpeed = 60;
     public float sprintChargingSpeed = 3;
+    public float rollCooldown = 2;
+    public float timeStamp;
 
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
@@ -84,8 +85,12 @@ public class PlayerController : MonoBehaviour {
             }
 
             if (Input.GetAxisRaw ("Interact") > 0) {
-                sprint();
-                animator.SetTrigger ("Interact");
+                if (timeStamp <= Time.time) {
+                    timeStamp = Time.time + rollCooldown;
+                    sprint ();
+                    animator.SetTrigger ("Interact");
+                }
+
             }
             Movement ();
         }
@@ -115,22 +120,22 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void sprint () {
-        
+
         //  Invoke("stopRollFx", .5f);
-        Sequence sprintSequence = DOTween.Sequence();
-        sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintChargingSpeed, .3f).SetEase(Ease.OutQuad));
-        sprintSequence.AppendCallback(() =>{rollFx.Play();});
-        sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintSpeedUpTime));
-        sprintSequence.Append(DOTween.To(() => movementSpeed, x => movementSpeed = x, defaultSpeed, sprintDuration).SetEase(Ease.OutQuad));
-        sprintSequence.AppendCallback(() =>{rollFx.Stop();});
+        Sequence sprintSequence = DOTween.Sequence ();
+        sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, sprintChargingSpeed, .3f).SetEase (Ease.OutQuad));
+        sprintSequence.AppendCallback (() => { rollFx.Play (); });
+        sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, sprintSpeed, sprintSpeedUpTime));
+        sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, defaultSpeed, sprintDuration).SetEase (Ease.OutQuad));
+        sprintSequence.AppendCallback (() => { rollFx.Stop (); });
     }
-    
+
     private void stopSprint () {
         movementSpeed = defaultSpeed;
     }
 
-    private void stopRollFx(){
-        rollFx.Stop();
+    private void stopRollFx () {
+        rollFx.Stop ();
     }
 
     private void LateUpdate () {
