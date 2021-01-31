@@ -7,7 +7,12 @@ using UnityEngine.Animations;
 [RequireComponent (typeof (HealthController))]
 public class PlayerController : MonoBehaviour, IDamageable {
     
-    [SerializeField] GameObject cameraHolder;
+    //[SerializeField] GameObject cameraHolder;
+
+    [SerializeField] Ability[] Abilities;
+
+    int abilityIndex;
+    int prevAbilityIndex = -1;
 
     [SerializeField] SingleShotEye activeAbility;
 
@@ -50,9 +55,14 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     void Start()
     {
-        if (PV && !PV.IsMine)
+        if (PV.IsMine)
         {
-            Destroy(GetComponentInChildren<Camera>().gameObject);
+            EquipAbility(0);
+        }
+        else { 
+            // distruzione ignota di camere
+               Destroy(GetComponentInChildren<Camera>().gameObject);
+               Destroy(rb);
         }
 
         
@@ -70,6 +80,23 @@ public class PlayerController : MonoBehaviour, IDamageable {
         Look();
         Move();
         Shoot();
+
+        /*
+        for( int i=0; i<2; i++)
+        {
+            EquipAbility(i);
+            break;
+        }*/
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            EquipAbility(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            EquipAbility(0);
+        }
+
     }
 
     void Shoot()
@@ -83,10 +110,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     void Look()
     {
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * mouseSensitivity);
-        //verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         verticalLookRotation += Mathf.Clamp(verticalLookRotation, -90f, 90f);
-        // vertical axis for camera?
-        //cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
     }
 
     void Move()
@@ -95,7 +119,25 @@ public class PlayerController : MonoBehaviour, IDamageable {
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
 
-    void Jump()
+    void EquipAbility(int _index)
+    {
+        if (_index == prevAbilityIndex)
+            return;
+
+        abilityIndex = _index;
+        //switch item
+        Abilities[abilityIndex].gameObject.SetActive(true);
+        if (prevAbilityIndex != -1)
+        {
+            //hide prev item
+            Abilities[prevAbilityIndex].gameObject.SetActive(false);
+        }
+        prevAbilityIndex = abilityIndex;
+
+        
+    }
+
+        void Jump()
     {
         /*
         var emitParams = new ParticleSystem.EmitParams();
