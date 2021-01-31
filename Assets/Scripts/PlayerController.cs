@@ -69,19 +69,36 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
         Look();
         Move();
         Shoot();
+        Strafe();
     }
 
     void Shoot()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            activeAbility.Use();
+            if(activeAbility != null)
+            {
+                activeAbility.Use();
+            }
+            else
+            {
+                activeAbility = GetComponentInChildren<SingleShotEye>();
+                if (activeAbility != null)
+                {
+                    activeAbility.Use();
+                }
+                else
+                {
+                    Debug.Log("NON SONO RIUSCITO AD IMPOSTARE SINGLE SHOT EYES!");
+                }
+            }
+            
         }
     }
 
     void Look()
     {
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * mouseSensitivity);
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
         //verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         verticalLookRotation += Mathf.Clamp(verticalLookRotation, -90f, 90f);
         // vertical axis for camera?
@@ -93,6 +110,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
         Vector3 moveDir = new Vector3(0, 0, Input.GetAxisRaw("Vertical")).normalized;
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
+
+    void Strafe()
+    {
+        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0).normalized;
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+    }
+
 
     void Jump()
     {

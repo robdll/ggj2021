@@ -114,7 +114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4438732712301814044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.226, y: 0.194, z: 0.213}
+  m_LocalPosition: {x: 0.086, y: 0.194, z: 0.243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 985892459040876848}
@@ -234,11 +234,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 2136788343807581751}
   activeAbility: {fileID: 4879292884219469768}
-  mouseSensitivity: 2.5
+  mouseSensitivity: 12
   sprintSpeed: 24
   walkSpeed: 12
   jumpForce: 300
-  smoothTime: 0.15
+  smoothTime: 0.05
   animator: {fileID: 6380983203285993634}
   rollFx: {fileID: 1803210549055303140}
   sprintSpeedUpTime: 0.01
