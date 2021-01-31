@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
     [HideInInspector]
     public PlayerController player;
     public int bulletDamage = 1;
+    public ParticleSystem collisionParticles;
+
     void Start()
     {
         playerTranform = player.transform;
@@ -28,7 +30,7 @@ public class Bullet : MonoBehaviour
             {
                 collision.gameObject.GetComponent<HealthController>().TakeDamage(bulletDamage);
             }
-
+            Instantiate(collisionParticles, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     

@@ -4978,6 +4978,8 @@ MonoBehaviour:
   playerTranform: {fileID: 0}
   player: {fileID: 0}
   bulletDamage: 1
+  collisionParticles: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
+    type: 3}
 --- !u!1001 &5432717588109007589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5071,19 +5073,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
       propertyPath: m_lineColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
       propertyPath: m_lineColor.g
-      value: 0.1569919
+      value: 0.5208678
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
       propertyPath: m_lineColor.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
       propertyPath: m_lightSaberFactor
-      value: 1
+      value: 0.732
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475718, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
+      propertyPath: m_doNotOverwriteTemplateMaterialProperties
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66e0018a9e63c4348b7a340890e5b30c, type: 3}
