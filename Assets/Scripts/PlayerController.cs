@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     public float jumpSpeed = 1;
     private float _jumpSpeed = 0;
     public ParticleSystem rollFx;
+    public ParticleSystem jumpFx;
+    public int jumpParticlesBurst = 30;
     //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
 
     PhotonView PV;
@@ -75,6 +77,9 @@ public class PlayerController : MonoBehaviour {
 
                     playerRigidbody.AddForce (new Vector3 (0, _jumpSpeed, 0), ForceMode.Impulse);
 
+                    var emitParams = new ParticleSystem.EmitParams();
+                    jumpFx.Emit(emitParams, jumpParticlesBurst);
+
                 }
             }
 
@@ -120,8 +125,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void sprint () {
-
-        //  Invoke("stopRollFx", .5f);
         Sequence sprintSequence = DOTween.Sequence ();
         sprintSequence.Append (DOTween.To (() => movementSpeed, x => movementSpeed = x, sprintChargingSpeed, .3f).SetEase (Ease.OutQuad));
         sprintSequence.AppendCallback (() => { rollFx.Play (); });
