@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
          //   Debug.Log("HO COLPITO " + collision.gameObject.name);
             if(collision.gameObject.GetComponent<HealthController>() != null)
             {
-                collision.gameObject.GetComponent<HealthController>().(bulletDamage);
+                collision.gameObject.GetComponent<HealthController>().TakeDamage(bulletDamage);
             }
             Instantiate(collisionParticles, transform.position, Quaternion.identity);
             PhotonNetwork.Destroy(gameObject);
