@@ -326,10 +326,15 @@ MonoBehaviour:
   jumpForce: 300
   smoothTime: 0.15
   animator: {fileID: 6380983203285993634}
+  rollSpeed: 200
+  rollSpeedUpTime: 0.01
+  rollDuration: 0.3
+  rollChargingSpeed: 2
+  rollCooldown: 1
+  timeStamp: 0
   rollFx: {fileID: 1803210549055303140}
-  sprintSpeedUpTime: 0.01
-  sprintDuration: 0.3
-  sprintChargingSpeed: 3
+  jumpFx: {fileID: 8416938607846721088}
+  jumpParticlesBurst: 30
 --- !u!54 &7759086327195144270
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1241,3 +1246,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab1112643ee572748b01dede71158272, type: 3}
+--- !u!198 &8416938607846721088 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19800000, guid: ab1112643ee572748b01dede71158272,
+    type: 3}
+  m_PrefabInstance: {fileID: 8416938607861275008}
+  m_PrefabAsset: {fileID: 0}
