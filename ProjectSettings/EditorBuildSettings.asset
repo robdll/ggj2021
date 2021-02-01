@@ -35,7 +35,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Multiplayer/Game.unity
     guid: 01c15a7a2ede5fe46a8e43b0ae843432
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World 1-1.unity
     guid: b26ad958194b44865a0686b7b47d599c
+  - enabled: 1
+    path: Assets/Prefabs/Einvironment.unity
+    guid: 34f4070e4155f514fb78ebe4b254ae21
   m_configObjects: {}

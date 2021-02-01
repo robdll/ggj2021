@@ -150,7 +150,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 0
+  m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RenderingLayerMask: 1
@@ -184,7 +184,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6206850983952824761}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
@@ -201,14 +201,14 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 2
+  far clip plane: 10
   field of view: 57.8
   orthographic: 0
   orthographic size: 2.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294956783
+    m_Bits: 2147473135
   m_RenderingPath: 0
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -235,17 +235,17 @@ MonoBehaviour:
   lockTransforms: 0
   renderWireFrame: 0
   lightType: 0
-  lightMultiplier: 5
-  spotExponent: 5
-  constantAttenuation: 2.4999998
-  linearAttenuation: 10
-  quadraticAttenuation: 100
+  lightMultiplier: 1
+  spotExponent: 0.1
+  constantAttenuation: 50
+  linearAttenuation: 50
+  quadraticAttenuation: 50
   aspect: 1
-  slices: 40
+  slices: 80
   colorTint: {r: 1, g: 1, b: 1, a: 1}
-  noiseSpeed: {x: 0, y: 0, z: 0}
+  noiseSpeed: {x: 10, y: 10, z: 10}
   useDithering: 1
-  ditherAmount: 2.4
+  ditherAmount: 185
   useSoftBlend: 0
   useCurves: 0
   worldScrollAmount: 0
@@ -254,8 +254,8 @@ MonoBehaviour:
   shadowBlurPasses: 0
   shadowBlurSize: 0
   renderFullShadows: 0
-  _renderShadowMapInUpdate: 0
-  spotRange: 2
+  _renderShadowMapInUpdate: 1
+  spotRange: 10
   spotNear: 0.1
   spotAngle: 45
   orthoSize: 1
