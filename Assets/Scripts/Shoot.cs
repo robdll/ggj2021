@@ -82,7 +82,7 @@ public class Shoot : Eye
                     {
                         destination = _hit.point;
                       //  Instantiate(particleSystem, destination, Quaternion.identity); //ONLY FOR TEST PURPOSES!!!
-                        Debug.Log("Sto Colpendo" + hit.collider.gameObject.name);
+                      //  Debug.Log("Sto Colpendo" + hit.collider.gameObject.name);
                     }
                 }
                 else
