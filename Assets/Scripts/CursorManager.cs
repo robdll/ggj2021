@@ -33,7 +33,7 @@ public class CursorManager : MonoBehaviour
 
     public void CrosshairMovement()
     {
-        Vector3 nextPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + Input.GetAxis("Mouse Y") * sensitivity, transform.localPosition.z);
+        Vector3 nextPosition = new Vector3(Mathf.Clamp(transform.localPosition.x, -200, 200)+Input.GetAxis("Mouse X")*sensitivity, transform.localPosition.y + Input.GetAxis("Mouse Y") * sensitivity, transform.localPosition.z);
         float crosshairMaxY = cam.ScreenToWorldPoint(new Vector3(nextPosition.x, Screen.height, nextPosition.z)).y - image.sprite.bounds.size.y * 0.5f;
         float crosshairMinY = cam.ScreenToWorldPoint(crosshairLimit.localPosition).y;
         transform.localPosition = new Vector3(nextPosition.x, Mathf.Clamp(nextPosition.y, -Screen.height * 0.28f, (Screen.height - image.sprite.bounds.size.y - crosshairTopOffset) * sensitivity), nextPosition.z);
