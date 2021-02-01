@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 
-public class HealthController : MonoBehaviour
+public class HealthController : MonoBehaviour, IDamageable
 {
     public int lives = 3;
     public int hp = 3;
@@ -64,8 +65,24 @@ public class HealthController : MonoBehaviour
         }
 
     }
-    public void TakeDamage(int _damage)
+    public void TakeDamage(float _damage)
     {
-        this.hp -= _damage;
+       
+    }
+
+    public void TakeDamage(int damage)
+    {
+        PhotonView PV;
+        if (player != null)
+        {
+            PV = player.photonView;
+            if (PV != null)
+            {
+                PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+            }
+        } 
+
+
+        hp -= damage;
     }
 }

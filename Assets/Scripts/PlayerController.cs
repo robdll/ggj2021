@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 [RequireComponent(typeof(HealthController))]
-public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
+public class PlayerController : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] GameObject cameraHolder;
@@ -221,13 +221,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PM.Respawn(transform);
     }
 
-    public void TakeDamage(float damage)
+    [PunRPC]
+    void RPC_TakeDamage(int damage)
     {
-        Debug.Log("took damage" + damage);
-    }
+        if (!PV.IsMine)
+        {
+            return;
+        }
 
-    public void GroundCheck(bool isGrounded)
-    {
-        grounded = isGrounded;
+        Debug.Log("took damage" + damage);
     }
 }

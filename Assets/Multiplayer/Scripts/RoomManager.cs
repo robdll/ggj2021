@@ -17,6 +17,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             return;
         }
         DontDestroyOnLoad(this);
+
         Instance = this;
     }
 

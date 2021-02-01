@@ -54,6 +54,16 @@ public class ScenesManager : MonoBehaviour
     }
 
 
+    public void SceneChangeFast(int index)
+    {
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.enabled = false;
+        }
+        SceneManager.LoadScene(index);
+    }
+
+
     public void SceneChange(int index, float delay)
     {
         StartCoroutine(CoLoadSceneAsyncAfterSeconds(delay, loadingScreenMinDuration, index));
