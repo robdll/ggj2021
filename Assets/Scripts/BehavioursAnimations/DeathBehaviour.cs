@@ -20,7 +20,7 @@ public class DeathBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         PlayerController player = animator.gameObject.GetComponent<PlayerController>();
-        player.Respawn();
+        player.Die();
         //Destroy(animator.gameObject);
         //ScenesManager.Instance.SceneChange(0);
     }

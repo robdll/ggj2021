@@ -1,38 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Photon.Pun;
+using System.IO;
 
 public class Bullet : MonoBehaviour
 {
     public float bulletSpeed = 1000f;
     [HideInInspector]
-    public Transform playerTranform;
-    [HideInInspector]
     public PlayerController player;
     public int bulletDamage = 1;
-    public ParticleSystem collisionParticles;
-
-    void Start()
-    {
-        playerTranform = player.transform;
-        if (playerTranform!=null)
-        {
-            /*DA DECOMMENTARE*/
-        //    GetComponent<Rigidbody>().AddForceAtPosition(playerTranform.transform.forward * bulletSpeed, transform.position, ForceMode.Impulse);
-        }
-    }
+    //public ParticleSystem collisionParticles;
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision != null)
         {
-         //   Debug.Log("HO COLPITO " + collision.gameObject.name);
-            if(collision.gameObject.GetComponent<HealthController>() != null)
+            //   Debug.Log("HO COLPITO " + collision.gameObject.name);
+
+            if (collision.gameObject.GetComponent<HealthController>() != null)
             {
                 collision.gameObject.GetComponent<HealthController>().TakeDamage(bulletDamage);
             }
-            Instantiate(collisionParticles, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs/ParticlesEffects", "EnergyExplosion"), transform.position, Quaternion.identity);
+
+           //Instantiate(collisionParticles, transform.position, Quaternion.identity);
+            PhotonNetwork.Destroy(gameObject);
         }
     
     }

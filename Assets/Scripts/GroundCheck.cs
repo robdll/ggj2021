@@ -40,7 +40,6 @@ public class GroundCheck : MonoBehaviour
             {
                 return;
             }
-
             playerController.SetGroundedState(true);
         }
     }

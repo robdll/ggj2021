@@ -164,7 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshairSprite: {fileID: 21300000, guid: 9de0756cf40eac344ba13f10ceadcffe, type: 3}
   crosshairLimit: {fileID: 0}
-  sensitivity: 1
+  sensitivity: 60
+  crosshairTopOffset: 10
 --- !u!1 &5099160256780511
 GameObject:
   m_ObjectHideFlags: 0

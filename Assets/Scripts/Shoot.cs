@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using Photon.Pun;
+using System.IO;
 
 public class Shoot : Eye
 {
@@ -7,8 +9,8 @@ public class Shoot : Eye
     public Transform gunHole;
     private Camera playerCam;
     public GameObject crosshair;
-
-   // public ParticleSystem particleSystem;
+    private NetworkManager NM;
+    
 
     public override void Use()
     {
@@ -16,18 +18,43 @@ public class Shoot : Eye
     }
     private void Start()
     {
+        NM = GetComponentInParent<NetworkManager>();
         playerCam = GetComponentInParent<Camera>();
     }
 
-    public void ShootBullet()
+  /* [PunRPC]
+    void RPC_ShootBullet(int damage)
     {
-        GameObject shotBullet = Instantiate(bulletPrefab, gunHole.position + transform.forward, Quaternion.identity);
+        PhotonView PV = GetComponentInParent<PlayerController>().PV;
+        if (!PV.IsMine)
+        {
+            return;
+        }
+        GameObject shotBullet = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bullet"), gunHole.position, Quaternion.identity);
         Rigidbody bulletRb = shotBullet.GetComponent<Rigidbody>();
-        bulletRb.AddForce(SetDirection().normalized  * bulletPrefab.GetComponent<Bullet>().bulletSpeed, ForceMode.Impulse);
+        bulletRb.AddForce(SetDirection().normalized * bulletPrefab.GetComponent<Bullet>().bulletSpeed, ForceMode.Impulse);
         PlayerController pc = GetComponentInParent<PlayerController>();
         Bullet bullet = shotBullet.GetComponent<Bullet>();
         bullet.player = pc;
         Destroy(shotBullet, 5f);
+        Debug.Log("Bullet shot");
+    }*/
+
+    public void ShootBullet()
+    {
+        PhotonView PV = GetComponentInParent<PhotonView>();
+        if (PV != null)
+        {
+            PV.RPC("RPC_Shoot", RpcTarget.All);
+        }
+        GameObject shotBullet = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bullet"), gunHole.position, Quaternion.identity);
+        Rigidbody bulletRb = shotBullet.GetComponent<Rigidbody>();
+        bulletRb.AddForce(SetDirection().normalized  * bulletPrefab.GetComponent<Bullet>().bulletSpeed, ForceMode.Impulse);
+        PlayerController pc = GetComponentInParent<PlayerController>();
+        Bullet bullet = shotBullet.GetComponent<Bullet>();
+        
+        bullet.player = pc;
+
     }
 
     public Vector3 SetDirection()

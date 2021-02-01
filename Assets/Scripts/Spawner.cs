@@ -1,18 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public abstract class Spawner : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void Spawn(GameObject objectToSpawn);
+    public abstract void Respawn(GameObject objectToRepawn);
+    public abstract void SpawnMultiple(GameObject[] objectsToSpawn);
+    public abstract void RespawnMultiple(GameObject[] objectsToRepawn);
 }
