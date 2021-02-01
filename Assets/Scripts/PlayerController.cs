@@ -5,11 +5,12 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 [RequireComponent(typeof(HealthController))]
-public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
+{
 
     [SerializeField] GameObject cameraHolder;
 
-    [SerializeField] SingleShotEye activeAbility;
+    [SerializeField] Eye[] activeAbility;
 
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
@@ -66,44 +67,65 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
 
     void Update()
     {
-        Look();
-        Move();
-        Shoot();
-    }
-
-    void Shoot()
-    {
-        if (Input.GetMouseButtonDown(0))
+        if(animator!=null)
         {
-            activeAbility.Use();
+            Look();
+            Move();
+            Strafe();
         }
+        else
+        {
+            Debug.Log("SOMETHING WENT WRONG, I DON'T HAVE AN ANIMATOR");
+        }
+     
     }
 
     void Look()
     {
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * mouseSensitivity);
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
         //verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         verticalLookRotation += Mathf.Clamp(verticalLookRotation, -90f, 90f);
         // vertical axis for camera?
         //cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
+
     }
 
     void Move()
-    {
+    {        
         Vector3 moveDir = new Vector3(0, 0, Input.GetAxisRaw("Vertical")).normalized;
+        int animatorMoveParameter = (int)moveDir.z;
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        animator.SetInteger("Move", 1);
+        if(rb.velocity.z >= -0.01f && rb.velocity.z <= 0.01f)
+        {
+            animator.SetInteger("Move", 0);
+        }
+    }
+
+    void Strafe()
+    {
+        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0).normalized;
+        int animatorMoveParameter = (int)moveDir.x;
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        animator.SetInteger("Move", 1);
+        if (rb.velocity.x >= -0.01f && rb.velocity.x <= 0.01f)
+        {
+            animator.SetInteger("Move", 0);
+        }
     }
 
     void Jump()
     {
         /*
+         * instantiate particles
         var emitParams = new ParticleSystem.EmitParams();
         jumpFx.Emit(emitParams, jumpParticlesBurst);
         */
-        animator.SetBool("grounded", grounded);
-        if (Input.GetAxisRaw("Jump") > 0 && grounded)
+        if (Input.GetAxisRaw("Jump") > 0 && grounded == true)
         {
             rb.AddForce(transform.up * jumpForce);
+
+            animator.SetBool("Grounded", false);
         }
     }
 
@@ -111,6 +133,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
     {
         if (Input.GetAxisRaw("Attack") > 0 && animator.GetBool("Attacking") == false)
         {
+            for (int i = 0; i < activeAbility.Length; i++)
+            {
+                activeAbility[i].Use();
+            }
             animator.SetBool("Attacking", true);
         }
         else
@@ -144,7 +170,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
         if (PV && !PV.IsMine)
             return;
 
-        //animator.SetBool("grounded", grounded);
+        animator.SetBool("Grounded", grounded);
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
 
 
@@ -183,29 +209,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
         rollFx.Stop();
     }
 
-    /*
-    public int score = 0;
-    public int frags = 0;
-    public int assists = 0;
-    public delegate void OnPlayerDeathDelegate ();
-    public event OnPlayerDeathDelegate deathEvent;
-    private HealthController healthController;
-    public Animator animator;
-    private bool grounded = true;
-    public float rollCooldown = 2;
-    public float timeStamp;
-
-    public float jumpSpeed = 1;
-    private float _jumpSpeed = 0;
-    [SerializeField]
-    private float rayLength = 1;
-    //private Dictionary<string, int> directions = new Dictionary<string, int>() { { "N", 0 }, };
-
-
-
-    void FixedUpdate () {
-
-    */
    
     public void Death()
     {   
@@ -221,5 +224,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
     public void TakeDamage(float damage)
     {
         Debug.Log("took damage" + damage);
+    }
+
+    public void GroundCheck(bool isGrounded)
+    {
+        grounded = isGrounded;
     }
 }

@@ -17,7 +17,8 @@ public class Bullet : MonoBehaviour
         playerTranform = player.transform;
         if (playerTranform!=null)
         {
-            GetComponent<Rigidbody>().AddForceAtPosition(playerTranform.transform.forward * bulletSpeed, transform.position, ForceMode.Impulse);
+            /*DA DECOMMENTARE*/
+        //    GetComponent<Rigidbody>().AddForceAtPosition(playerTranform.transform.forward * bulletSpeed, transform.position, ForceMode.Impulse);
         }
     }
 
@@ -25,7 +26,7 @@ public class Bullet : MonoBehaviour
     {
         if(collision != null)
         {
-            Debug.Log("HO COLPITO " + collision.gameObject.name);
+         //   Debug.Log("HO COLPITO " + collision.gameObject.name);
             if(collision.gameObject.GetComponent<HealthController>() != null)
             {
                 collision.gameObject.GetComponent<HealthController>().TakeDamage(bulletDamage);
