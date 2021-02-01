@@ -56,14 +56,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable {
 
     void Start()
     {
-        if (PV.IsMine)
+        if (!PV.IsMine) { 
+            Destroy(rayCamera);
+            Destroy(rb);
+        } else
         {
             EquipAbility(0);
-        }
-        else { 
-            // distruzione ignota di camere
-            Destroy(GetComponentInChildren<Camera>().gameObject);
-            Destroy(rb);
         }
 
         
