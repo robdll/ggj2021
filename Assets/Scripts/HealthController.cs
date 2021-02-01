@@ -80,9 +80,7 @@ public class HealthController : MonoBehaviour, IDamageable
             {
                 PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
             }
-        } 
-
-
+        }
         hp -= damage;
     }
 }

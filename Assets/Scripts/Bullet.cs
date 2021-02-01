@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -29,10 +28,10 @@ public class Bullet : MonoBehaviour
          //   Debug.Log("HO COLPITO " + collision.gameObject.name);
             if(collision.gameObject.GetComponent<HealthController>() != null)
             {
-                collision.gameObject.GetComponent<HealthController>().TakeDamage(bulletDamage);
+                collision.gameObject.GetComponent<HealthController>().(bulletDamage);
             }
             Instantiate(collisionParticles, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     
     }

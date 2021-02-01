@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Photon.Pun;
+using System.IO;
 
 public class Shoot : Eye
 {
@@ -21,7 +22,7 @@ public class Shoot : Eye
 
     public void ShootBullet()
     {
-        GameObject shotBullet = Instantiate(bulletPrefab, gunHole.position + transform.forward, Quaternion.identity);
+        GameObject shotBullet = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","Bullet"), gunHole.position + transform.forward, Quaternion.identity);
         Rigidbody bulletRb = shotBullet.GetComponent<Rigidbody>();
         bulletRb.AddForce(SetDirection().normalized  * bulletPrefab.GetComponent<Bullet>().bulletSpeed, ForceMode.Impulse);
         PlayerController pc = GetComponentInParent<PlayerController>();
@@ -55,7 +56,7 @@ public class Shoot : Eye
                     {
                         destination = _hit.point;
                       //  Instantiate(particleSystem, destination, Quaternion.identity); //ONLY FOR TEST PURPOSES!!!
-                        Debug.Log("Sto Colpendo" + hit.collider.gameObject.name);
+                      //  Debug.Log("Sto Colpendo" + hit.collider.gameObject.name);
                     }
                 }
                 else
